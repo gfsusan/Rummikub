@@ -11,11 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class Board extends JPanel {
-	BoardListener boardHandler;
-	BoardChecker checker;
-
-	Image originalBoard, blankImage;
-	Graphics boardGraphics;
+	BoardListener bl;
 
 	// number of TileSets
 	private int nTileSets = 0;
@@ -23,10 +19,9 @@ public class Board extends JPanel {
 	private static final int BOARD_WIDTH = 20;
 	private static final int BOARD_HEIGHT = 10;
 
-	int[][] currentTiles = new int[BOARD_HEIGHT][BOARD_WIDTH];
-	int[][] previousTiles = new int[BOARD_HEIGHT][BOARD_WIDTH];
+	private int[][] currentTiles = new int[BOARD_HEIGHT][BOARD_WIDTH];
+	private int[][] previousTiles = new int[BOARD_HEIGHT][BOARD_WIDTH];
 
-	String pathSep;
 
 	public Board() {
 		super();
@@ -36,19 +31,9 @@ public class Board extends JPanel {
 		setVisible(true);
 
 		// boardHandler
-		boardHandler = new BoardListener(this);
-		addMouseMotionListener(boardHandler);
-		addMouseListener(boardHandler);
-
-		// boardChecker
-		checker = new BoardChecker(BOARD_HEIGHT, BOARD_WIDTH);
-
-		pathSep = System.getProperty("file.separator");
-		if (pathSep.equals("\\")) {
-			pathSep = "\\\\";
-		}
-
-		blankImage = (new ImageIcon("pics" + pathSep + "blank.gif")).getImage();
+		bl = new BoardListener(this);
+		addMouseMotionListener(bl);
+		addMouseListener(bl);
 
 		// initialize all the tiles as blank
 		for (int i = 0; i < BOARD_HEIGHT; i++) {
@@ -69,12 +54,14 @@ public class Board extends JPanel {
 		int tileId = currentTiles[i][j];
 
 		if (tileId == -1)
-			tileImage = blankImage;
+			tileImage = Deck.getBlankTile().getImage();
 		else
 			tileImage = Deck.getTile(tileId).getImage();
 	}
 
 	public void paint(Graphics g) {
+		Image originalBoard = null;
+		Graphics boardGraphics;
 		if (originalBoard == null) {
 			originalBoard = createImage(BOARD_WIDTH * 45, BOARD_HEIGHT * 60);
 			boardGraphics = originalBoard.getGraphics();

@@ -6,6 +6,7 @@ public class Deck {
 
 	// Tile생성하고,
 	private static Tile[] deck;
+	private static Tile blank;
 	private static ArrayList<Integer> remains;
 
 	private static final int deckSize = 106;
@@ -36,18 +37,24 @@ public class Deck {
 			remains.add(tileID);
 			tileID++;
 		}
+
+		blank = new Tile();
 	}
 
 	// TODO return tile??? when use?
 	public static Tile getTile(int tileID) {
 		return deck[tileID];
 	}
+	
+	public static Tile getBlankTile() {
+		return blank;
+	}
 
 	public static int takeTileFromDeck() {
 		int random = (int) (Math.random() * remains.size());
 		int rVal = remains.get(random);
 		remains.remove(random);
-		
+
 		return rVal;
 	}
 

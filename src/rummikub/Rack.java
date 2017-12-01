@@ -1,7 +1,61 @@
 package rummikub;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
+public class Rack {
+	public static final int HEIGHT = 4;
+	public static final int WIDTH = 12;
+	private static final int INITIAL_DEAL = 14;
+	private static final int DRAW_NUM = 4;
+
+	private ArrayList<Integer> currentTiles = new ArrayList<Integer>();
+	private ArrayList<Integer> previousTiles = new ArrayList<Integer>();
+
+	public Rack() {
+		for (int i = 0; i < INITIAL_DEAL; i++)
+			currentTiles.add(Deck.takeTileFromDeck());
+
+		saveCurrentRack();
+	}
+
+	public void saveCurrentRack() {
+		previousTiles = new ArrayList<Integer>(currentTiles);
+	}
+
+	public int getTileID(int index) {
+		return currentTiles.get(index);
+	}
+
+	public void reset() {
+		currentTiles = new ArrayList<Integer>(previousTiles);
+	}
+
+	public void drawFourTiles() {
+		for (int i = 0; i < DRAW_NUM; i++) {
+			currentTiles.add(Deck.takeTileFromDeck());
+		}
+	}
+
+	public void removeTile(int index) {
+		currentTiles.remove(index);
+	}
+
+	// TODO public int getTileNumber(int tileIndex)
+
+	public int getSize() {
+		return currentTiles.size();
+	}
+
+	public void sortByNumber() {
+		// TODO ;
+	}
+
+	public void sortByColor() {
+		Collections.sort(currentTiles);
+	}
+}
+/*
 public class Rack {
 	// default size
 	public static final int HEIGHT = 4;
@@ -57,11 +111,10 @@ public class Rack {
 		int count = 0;
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < WIDTH; j++) {
-				if (currentTiles[i][j] != -1 && count < 4) {
+				if (currentTiles[i][j] != -1 && count < DRAW_NUM) {
 					currentTiles[i][j] = Deck.takeTileFromDeck();
 					count++;
 					// TODO Rack이 꽉 차면??? -> 한사람이 48개 이상 가지고있기는 어렵다 (안해)
-					break;
 				}
 			}
 		}
@@ -132,3 +185,5 @@ public class Rack {
 	}
 
 }
+
+*/

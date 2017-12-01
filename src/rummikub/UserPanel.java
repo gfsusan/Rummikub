@@ -47,12 +47,11 @@ public class UserPanel extends JPanel {
 			originalRack = createImage(getWidth(), getHeight());
 			tilesGraphics = originalRack.getGraphics();
 			tilesGraphics.setColor(new Color(0, 156, 0));
-			;
 			tilesGraphics.fillRect(0, 0, getWidth(), getHeight());
 		}
 
 		if (i < Rack.HEIGHT && j < Rack.WIDTH) {
-			int tileId = playerRack.getTileID(i, j);
+			int tileId = playerRack.getTileID(i+j);
 			tileImage = Deck.getTile(tileId).getImage();
 		}
 

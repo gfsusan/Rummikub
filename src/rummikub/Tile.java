@@ -57,6 +57,7 @@ public class Tile {
    
    // return tile's color
    private String getColor() {
+	   
       if (0 <= tileID && tileID <= 25) {
          return "red";
       }

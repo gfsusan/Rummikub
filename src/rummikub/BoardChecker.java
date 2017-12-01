@@ -3,17 +3,15 @@ package rummikub;
 import java.util.ArrayList;
 
 public class BoardChecker {
-	int height, width;
+	Board board;
 
-	public BoardChecker(int height, int width) {
-		this.height = height;
-		this.width = width;
+	public BoardChecker(Board board) {
+		this.board = board;
 	}
-	
-	
+
 	// TODO returns an ArrayList of TileSet on the board
 	public ArrayList<TileSet> getTileSets() {
-		
+
 		return null;
 
 	}
