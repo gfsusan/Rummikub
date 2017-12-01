@@ -8,16 +8,10 @@ public class Player {
 	// tileTaken은 필요 X
 	boolean isTurn, tilePlaced;
 
-	public Player() {
+	public Player(Rack playerRack) {
+		this.rack = playerRack;
 		isTurn = true;
 		tilePlaced = false;
-		//TODO 생성자 수정
-		rack = new Rack();
-	}
-
-	public Player(Rack playerRack) {
-		this();
-		this.rack=playerRack;
 	}
 
 	public void setTurn(boolean isTurn) {

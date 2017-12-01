@@ -20,7 +20,7 @@ public class InfoPanel extends JPanel {
 	JPanel buttonPanel;
 
 	
-	public InfoPanel(Rack remains, Rack playerRack) {
+	public InfoPanel(Deck deck, Rack playerRack) {
 		
 	}
 

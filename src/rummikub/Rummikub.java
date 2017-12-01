@@ -39,9 +39,6 @@ public class Rummikub extends JFrame {
 		// 플레이어의 Rack 생성
 		playerRack = new Rack(deck, RACK_SIZE);
 		aiRack = new Rack(deck, RACK_SIZE);
-		
-		// TODO InfoPanel 로 옮기기
-		playerRack.setNewRack();
 
 		// player와 AI를 생성
 		player = new Player(playerRack);
@@ -49,7 +46,7 @@ public class Rummikub extends JFrame {
 
 		board = new Board();
 		userPanel = new UserPanel(playerRack);
-		infoPanel = new InfoPanel(remains, playerRack);
+		infoPanel = new InfoPanel(deck, playerRack);
 
 		setSize(1000, 710);
 		setResizable(false);
