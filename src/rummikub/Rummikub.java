@@ -37,8 +37,8 @@ public class Rummikub extends JFrame {
 		deck = new Deck();
 
 		// 플레이어의 Rack 생성
-		playerRack = new Rack(deck, RACK_SIZE);
-		aiRack = new Rack(deck, RACK_SIZE);
+		playerRack = new Rack();
+		aiRack = new Rack();
 
 		// player와 AI를 생성
 		player = new Player(playerRack);

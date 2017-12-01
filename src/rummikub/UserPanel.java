@@ -8,6 +8,9 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+/**
+ * Rack class에 있던 display함수 가져오기
+ */
 public class UserPanel extends JPanel {
 	RackListener rl;
 	Image originalRack;

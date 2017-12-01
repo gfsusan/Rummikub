@@ -43,7 +43,7 @@ public class Deck {
 		return deck[tileID];
 	}
 
-	public int takeTileFromDeck() {
+	public static int takeTileFromDeck() {
 		int random = (int) (Math.random() * remains.size());
 		int rVal = remains.get(random);
 		remains.remove(random);

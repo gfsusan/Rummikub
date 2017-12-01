@@ -63,12 +63,6 @@ public class Board extends JPanel {
 		return currentTiles;
 	}
 
-	// returns an ArrayList of TileSet on the board
-	public ArrayList<TileSet> getTileSets() {
-
-		return null;
-
-	}
 
 	private void drawTile(int i, int j) {
 		Image tileImage;

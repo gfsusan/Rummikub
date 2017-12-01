@@ -2,7 +2,7 @@ package rummikub;
 
 import java.util.ArrayList;
 
-public class Rack {
+public class Rack2 {
 	// default size
 	public static final int HEIGHT = 4;
 	public static final int WIDTH = 12;
@@ -15,7 +15,7 @@ public class Rack {
 	UserPanel userPanel;
 
 	// player, ai의 rack 생성 - remains를 받는다
-	public Rack() {
+	public Rack2() {
 		// 모든 카드를 blank tile로 설정
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < WIDTH; j++)
