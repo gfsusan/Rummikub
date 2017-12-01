@@ -6,17 +6,16 @@ import java.awt.Dimension;
 import javax.swing.*;
 
 public class Rummikub extends JFrame {
-	static Rummikub Rummikub;
-	Board board;
-	UserPanel userPanel;
-	InfoPanel infoPanel;
-	JPanel top;
+	private static Rummikub Rummikub;
+	private Board board;
+	private UserPanel userPanel;
+	private InfoPanel infoPanel;
+	private JPanel top;
 
 	final int RACK_SIZE = 14;
-	Deck deck; // CompleteTileSet
-	Rack pool;
-	Rack playerRack;
-	Rack aiRack;
+	private Deck deck; // CompleteTileSet
+	private Rack playerRack;
+	private Rack aiRack;
 
 	AI ai;
 	Player player;
@@ -34,20 +33,23 @@ public class Rummikub extends JFrame {
 		if (pathSep.equals("\\"))
 			pathSep = "\\\\";
 
+		// Deck 생성
 		deck = new Deck();
 
-		pool = new Rack();
-		playerRack = new Rack(pool, RACK_SIZE);
-		aiRack = new Rack(pool, RACK_SIZE);
-		// TODO 얘 왜함 ? ㅋㅋㅋㅋ
+		// 플레이어의 Rack 생성
+		playerRack = new Rack(deck, RACK_SIZE);
+		aiRack = new Rack(deck, RACK_SIZE);
+		
+		// TODO InfoPanel 로 옮기기
 		playerRack.setNewRack();
 
-		ai = new AI(aiRack);
+		// player와 AI를 생성
 		player = new Player(playerRack);
+		ai = new AI(aiRack);
 
 		board = new Board();
 		userPanel = new UserPanel(playerRack);
-		infoPanel = new InfoPanel(pool, playerRack);
+		infoPanel = new InfoPanel(remains, playerRack);
 
 		setSize(1000, 710);
 		setResizable(false);
