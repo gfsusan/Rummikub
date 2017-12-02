@@ -19,7 +19,7 @@ public class Board extends JPanel {
 	// number of TileSets
 	private int nTileSets = 0;
 
-	public static final int WIDTH = 20;
+	public static final int WIDTH = 22;
 	public static final int HEIGHT = 8;
 
 	private int[][] currentTiles = new int[HEIGHT][WIDTH];

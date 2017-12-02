@@ -97,9 +97,15 @@ public class Tile {
 		return img;
 	}
 
+	public int getTileNum() {
+		return tileNum;
+	}
 
 	public int getTileIndex() {
 		return (tileID / 2) + 1;
 	}
 
+	public int getIntTileColor() {
+		return tileID / 26;
+	}
 }
