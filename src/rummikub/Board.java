@@ -13,15 +13,18 @@ import javax.swing.JPanel;
 public class Board extends JPanel {
 	BoardListener bl;
 
+	Image blankImage;
+	Image imgBoard;
+	Graphics boardGraphics;
+
 	// number of TileSets
 	private int nTileSets = 0;
 
-	private static final int BOARD_WIDTH = 20;
-	private static final int BOARD_HEIGHT = 10;
+	public static final int BOARD_WIDTH = 20;
+	public static final int BOARD_HEIGHT = 10;
 
 	private int[][] currentTiles = new int[BOARD_HEIGHT][BOARD_WIDTH];
 	private int[][] previousTiles = new int[BOARD_HEIGHT][BOARD_WIDTH];
-
 
 	public Board() {
 		super();
@@ -35,6 +38,15 @@ public class Board extends JPanel {
 		addMouseMotionListener(bl);
 		addMouseListener(bl);
 
+	String 	pathSep = System.getProperty("file.separator");
+
+		if(pathSep.equals("\\"))
+		{
+			pathSep = "\\\\";
+		}
+System.out.println(pathSep);
+	blankImage = (new ImageIcon("pics" + pathSep + "blank.gif")).getImage();
+		
 		// initialize all the tiles as blank
 		for (int i = 0; i < BOARD_HEIGHT; i++) {
 			for (int j = 0; j < BOARD_WIDTH; j++) {
@@ -48,23 +60,26 @@ public class Board extends JPanel {
 		return currentTiles;
 	}
 
-
 	private void drawTile(int i, int j) {
 		Image tileImage;
 		int tileId = currentTiles[i][j];
 
 		if (tileId == -1)
-			tileImage = Deck.getBlankTile().getImage();
+			//tileImage = Deck.getBlankTile().getImageIcon().getImage();
+			tileImage=Deck.getBlankTile().getImage();
 		else
-			tileImage = Deck.getTile(tileId).getImage();
+			//tileImage = Deck.getTile(tileId).getImageIcon().getImage();
+			tileImage=Deck.getTile(tileId).getImage();
+
+		boardGraphics = imgBoard.getGraphics();
+		boardGraphics.drawImage(tileImage, j * 45, i * 60, this);
 	}
 
 	public void paint(Graphics g) {
-		Image originalBoard = null;
-		Graphics boardGraphics;
-		if (originalBoard == null) {
-			originalBoard = createImage(BOARD_WIDTH * 45, BOARD_HEIGHT * 60);
-			boardGraphics = originalBoard.getGraphics();
+
+		if (imgBoard == null) {
+			imgBoard = createImage(BOARD_WIDTH * 45, BOARD_HEIGHT * 60);
+			boardGraphics = imgBoard.getGraphics();
 			boardGraphics.setColor(new Color(250, 218, 94));
 			boardGraphics.fillRect(0, 0, getWidth(), getHeight());
 		}
@@ -74,7 +89,7 @@ public class Board extends JPanel {
 				drawTile(i, j);
 			}
 		}
-		g.drawImage(originalBoard, 0, 0, this);
+		g.drawImage(imgBoard, 0, 0, this);
 	}
 
 	public Board getBoard() {

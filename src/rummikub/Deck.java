@@ -1,5 +1,6 @@
 package rummikub;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Deck {
@@ -12,7 +13,7 @@ public class Deck {
 	private static final int deckSize = 106;
 
 	// creates complete deck of tiles
-	public Deck() {
+	public Deck() throws IOException {
 		deck = new Tile[deckSize];
 		remains = new ArrayList<Integer>();
 		int tileID = 0;

@@ -49,6 +49,14 @@ public class Rack {
 
 	public void sortByNumber() {
 		// TODO ;
+		for (int i = currentTiles.size(); i > 0; i--) {
+			for (int j = 0; j < i; j++) {
+				if(currentTiles.get(j)%26 > currentTiles.get(j+1)%26) {
+					currentTiles.add(j, currentTiles.get(j+1));
+					currentTiles.remove(j+2);
+				}
+			}
+		} 
 	}
 
 	public void sortByColor() {
