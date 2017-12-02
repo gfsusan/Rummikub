@@ -18,9 +18,10 @@ public class Rummikub extends JFrame {
 	private Board board;
 	private JPanel topRight;
 	private GameMangerPanel gmPanel;
+	private JPanel space;
 
 	// bottom GUI
-	private UserPanel userPanel;
+	private RackPanel rackPanel;
 	private JPanel sortPanel;
 
 	private BoardChecker bc;
@@ -66,25 +67,28 @@ public class Rummikub extends JFrame {
 		top = new JPanel();
 		top.setLayout(new BorderLayout());
 		top.setBackground(Color.CYAN);
-		top.setPreferredSize(new Dimension(900, 600));
+		// top.setPreferredSize(new Dimension(900, 600));
 
 		bottom = new JPanel();
 		bottom.setLayout(new BorderLayout());
 		bottom.setBackground(Color.BLUE);
-		bottom.setPreferredSize(new Dimension(1200, 200));
+		// bottom.setPreferredSize(new Dimension(1200, 200));
 
 		topRight = new JPanel();
 		topRight.setLayout(new BorderLayout());
 		topRight.setBackground(Color.BLACK);
-		topRight.setPreferredSize(new Dimension(300, 600));
+		// topRight.setPreferredSize(new Dimension(300, 600));
 
 		// manager
 		gmPanel = new GameMangerPanel(playerRack, aiRack);
 		gmPanel.setBackground(Color.ORANGE);
 		// TODO profile GUI
 
+		space = new JPanel();
+		space.setPreferredSize(new Dimension(0, 30));
+
 		// TODO add the Profile GUI
-		userPanel = new UserPanel(playerRack);
+		rackPanel = new RackPanel(playerRack);
 		sortPanel = new JPanel();
 		sortPanel.setLayout(new GridLayout(2, 1));
 		JButton btnSort1 = new JButton("Sort by Number");
@@ -98,19 +102,18 @@ public class Rummikub extends JFrame {
 
 		top.add(board, BorderLayout.CENTER);
 		top.add(topRight, BorderLayout.EAST);
+		top.add(space, BorderLayout.SOUTH);
 
-		topRight.add(new JLabel("임시"), BorderLayout.NORTH);		// TODO 삭제할 확률 높음 ㅋㅋ 임시
 		topRight.add(gmPanel, BorderLayout.CENTER);
-		
 
-		bottom.add(userPanel, BorderLayout.CENTER);
+		bottom.add(rackPanel, BorderLayout.CENTER);
 		bottom.add(sortPanel, BorderLayout.EAST);
 
 		sortPanel.add(btnSort1);
 		sortPanel.add(btnSort2);
 
-		// rack이 위치하는 userPanel
-		userPanel = new UserPanel(playerRack);
+		// rack이 위치하는 rackPanel
+		rackPanel = new RackPanel(playerRack);
 
 		pack();
 		setVisible(true);

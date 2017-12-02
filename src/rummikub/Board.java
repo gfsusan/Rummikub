@@ -19,17 +19,17 @@ public class Board extends JPanel {
 	// number of TileSets
 	private int nTileSets = 0;
 
-	public static final int BOARD_WIDTH = 20;
-	public static final int BOARD_HEIGHT = 10;
+	public static final int WIDTH = 20;
+	public static final int HEIGHT = 8;
 
-	private int[][] currentTiles = new int[BOARD_HEIGHT][BOARD_WIDTH];
-	private int[][] previousTiles = new int[BOARD_HEIGHT][BOARD_WIDTH];
+	private int[][] currentTiles = new int[HEIGHT][WIDTH];
+	private int[][] previousTiles = new int[HEIGHT][WIDTH];
 
 	public Board() {
 		super();
 		this.setLayout(new FlowLayout());
 		setBackground(new Color(253, 236, 136));
-		setPreferredSize(new Dimension(BOARD_WIDTH * 45, BOARD_HEIGHT * 60));
+		setPreferredSize(new Dimension(WIDTH * 45, HEIGHT * 60));
 		setVisible(true);
 
 		// add boardListener
@@ -38,8 +38,8 @@ public class Board extends JPanel {
 		addMouseListener(bl);
 
 		// initialize all the tiles as blank
-		for (int i = 0; i < BOARD_HEIGHT; i++) {
-			for (int j = 0; j < BOARD_WIDTH; j++) {
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
 				currentTiles[i][j] = -1;
 				previousTiles[i][j] = -1;
 			}
@@ -67,14 +67,14 @@ public class Board extends JPanel {
 	public void paint(Graphics g) {
 
 		if (imgBoard == null) {
-			imgBoard = createImage(BOARD_WIDTH * 45, BOARD_HEIGHT * 60);
+			imgBoard = createImage(WIDTH * 45, HEIGHT * 60);
 			boardGraphics = imgBoard.getGraphics();
 			boardGraphics.setColor(new Color(250, 218, 94));
 			boardGraphics.fillRect(0, 0, getWidth(), getHeight());
 		}
 
-		for (int i = 0; i < BOARD_HEIGHT; i++) {
-			for (int j = 0; j < BOARD_WIDTH; j++) {
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
 				drawTile(i, j);
 			}
 		}

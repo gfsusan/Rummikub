@@ -7,7 +7,7 @@ import java.awt.event.MouseMotionListener;
 public class BoardListener implements MouseListener, MouseMotionListener {
 
 	Board board;
-
+	
 	public BoardListener(Board board) {
 		this.board = board;
 	}

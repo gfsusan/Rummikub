@@ -12,30 +12,30 @@ import javax.swing.JPanel;
 /**
  * Rack class에 있던 display함수 가져오기
  */
-public class UserPanel extends JPanel {
+public class RackPanel extends JPanel {
 
 	RackListener rl;
 	Image imgRack;
 	Image tileImage, blankImage;
 	Graphics tilesGraphics;
 
-	public static final int RACK_WIDTH = 12;
-	public static final int RACK_HEIGHT = 4;
+	public static final int WIDTH = 24;
+	public static final int HEIGHT = 2;
 
-	private int[][] currentTiles = new int[RACK_HEIGHT][RACK_WIDTH];
-	private int[][] previousTiles = new int[RACK_HEIGHT][RACK_WIDTH];
+	private int[][] currentTiles = new int[HEIGHT][WIDTH];
+	private int[][] previousTiles = new int[HEIGHT][WIDTH];
 
 	Rack playerRack;
 
-	public UserPanel() {
+	public RackPanel() {
 
 	}
 
-	public UserPanel(Rack playerRack) {
+	public RackPanel(Rack playerRack) {
 		super();
 		setLayout(new FlowLayout());
 		setBackground(Color.RED); // TODO why does this not work?
-		setPreferredSize(new Dimension(playerRack.WIDTH * 45, playerRack.HEIGHT * 60));
+		setPreferredSize(new Dimension(WIDTH * 45, HEIGHT * 60));
 		setVisible(true);
 
 		// add Rack Listener and Mouse Listener
@@ -45,11 +45,11 @@ public class UserPanel extends JPanel {
 		// set playerRack
 		this.playerRack = playerRack;
 
-		for (int i = 0; i < RACK_HEIGHT * RACK_WIDTH; i++) {
+		for (int i = 0; i < HEIGHT * WIDTH; i++) {
 			if (i < playerRack.getSize())
-				currentTiles[i / RACK_WIDTH][i % RACK_WIDTH] = playerRack.getTileID(i);
+				currentTiles[i / WIDTH][i % WIDTH] = playerRack.getTileID(i);
 			else
-				currentTiles[i / RACK_WIDTH][i % RACK_WIDTH] = -1;
+				currentTiles[i / WIDTH][i % WIDTH] = -1;
 		}
 	}
 
@@ -68,21 +68,21 @@ public class UserPanel extends JPanel {
 
 	public void paint(Graphics g) {
 		if (imgRack == null) {
-			imgRack = createImage(RACK_WIDTH*45,RACK_HEIGHT*60);
+			imgRack = createImage(WIDTH*45,HEIGHT*60);
 			tilesGraphics = imgRack.getGraphics();
 			tilesGraphics.setColor(new Color(0, 156, 0));
 			tilesGraphics.fillRect(0, 0, getWidth(), getHeight());
 		}
 
-		for(int i=0;i<RACK_HEIGHT; i++) {
-			for (int j=0;j<RACK_WIDTH;j++) {
+		for(int i=0;i<HEIGHT; i++) {
+			for (int j=0;j<WIDTH;j++) {
 				drawTile(i,j);
 			}
 		}
 		g.drawImage(imgRack, 0, 0, this);
 	}
 
-	public UserPanel getPanel() {
+	public RackPanel getPanel() {
 		return this;
 	}
 }

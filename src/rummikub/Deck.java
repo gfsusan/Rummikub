@@ -46,17 +46,19 @@ public class Deck {
 	public static Tile getTile(int tileID) {
 		return deck[tileID];
 	}
-	
+
 	public static Tile getBlankTile() {
 		return blank;
 	}
 
 	public static int takeTileFromDeck() {
 		int random = (int) (Math.random() * remains.size());
-		int rVal = remains.get(random);
+		int rID = remains.get(random);
 		remains.remove(random);
 
-		return rVal;
+		System.out.println("tile taken from Deck : " + rID);
+
+		return rID;
 	}
 
 }

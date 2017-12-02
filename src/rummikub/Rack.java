@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Rack {
-	public static final int HEIGHT = 4;
-	public static final int WIDTH = 12;
 	private static final int INITIAL_DEAL = 14;
 	private static final int DRAW_NUM = 4;
 
