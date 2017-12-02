@@ -42,7 +42,6 @@ public class Deck {
 		blank = new Tile();
 	}
 
-	// TODO return tile??? when use?
 	public static Tile getTile(int tileID) {
 		return deck[tileID];
 	}

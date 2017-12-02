@@ -14,14 +14,20 @@ public class Player {
 		tilePlaced = false;
 	}
 
+	// set player's turn
 	public void setTurn(boolean isTurn) {
 		this.isTurn = isTurn;
 	}
 
+	public void setTilePlaced(boolean tilePlaced) {
+		this.tilePlaced=tilePlaced;
+	}
+	
+	//
 	public boolean isTurn() {
 		return this.isTurn;
 	}
-
+	
 	public boolean tilePlaced() {
 		return this.tilePlaced;
 	}
