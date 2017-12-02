@@ -45,35 +45,40 @@ public class UserPanel extends JPanel {
 		// set playerRack
 		this.playerRack = playerRack;
 
-		for (int i = 0; i < playerRack.getSize(); i++) {
-			currentTiles[i / RACK_WIDTH][i % RACK_WIDTH] = playerRack.getTileID(i);
+		for (int i = 0; i < RACK_HEIGHT * RACK_WIDTH; i++) {
+			if (i < playerRack.getSize())
+				currentTiles[i / RACK_WIDTH][i % RACK_WIDTH] = playerRack.getTileID(i);
+			else
+				currentTiles[i / RACK_WIDTH][i % RACK_WIDTH] = -1;
 		}
 	}
 
 	public void drawTile(int i, int j) {
+		Image tileImage;
+		int tileId = currentTiles[i][j];
+
+		if (tileId == -1)
+			tileImage = Deck.getBlankTile().getImage();
+		else
+			tileImage = Deck.getTile(tileId).getImage();
+
+		tilesGraphics = imgRack.getGraphics();
+		tilesGraphics.drawImage(tileImage, j * 45, i * 60, this);
+	}
+
+	public void paint(Graphics g) {
 		if (imgRack == null) {
-			imgRack = createImage(getWidth(), getHeight());
+			imgRack = createImage(RACK_WIDTH*45,RACK_HEIGHT*60);
 			tilesGraphics = imgRack.getGraphics();
 			tilesGraphics.setColor(new Color(0, 156, 0));
 			tilesGraphics.fillRect(0, 0, getWidth(), getHeight());
 		}
 
-		if (i < Rack.HEIGHT && j < Rack.WIDTH) {
-			int tileId = playerRack.getTileID(i + j);
-			tileImage = Deck.getTile(tileId).getImage();
+		for(int i=0;i<RACK_HEIGHT; i++) {
+			for (int j=0;j<RACK_WIDTH;j++) {
+				drawTile(i,j);
+			}
 		}
-
-		tilesGraphics = imgRack.getGraphics();
-		tilesGraphics.drawImage(tileImage, i * 45, j * 60, this);
-	}
-
-	public void paint(Graphics g) {
-		if (imgRack == null) {
-			imgRack = createImage(getWidth(), getHeight());
-			tilesGraphics = imgRack.getGraphics();
-			tilesGraphics.setColor(new Color(0, 156, 0));
-		}
-
 		g.drawImage(imgRack, 0, 0, this);
 	}
 
