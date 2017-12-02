@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 public class Board extends JPanel {
 	BoardListener bl;
 
-	Image blankImage;
 	Image imgBoard;
 	Graphics boardGraphics;
 
@@ -33,20 +32,11 @@ public class Board extends JPanel {
 		setPreferredSize(new Dimension(BOARD_WIDTH * 45, BOARD_HEIGHT * 60));
 		setVisible(true);
 
-		// boardHandler
+		// add boardListener
 		bl = new BoardListener(this);
 		addMouseMotionListener(bl);
 		addMouseListener(bl);
 
-	String 	pathSep = System.getProperty("file.separator");
-
-		if(pathSep.equals("\\"))
-		{
-			pathSep = "\\\\";
-		}
-System.out.println(pathSep);
-	blankImage = (new ImageIcon("pics" + pathSep + "blank.gif")).getImage();
-		
 		// initialize all the tiles as blank
 		for (int i = 0; i < BOARD_HEIGHT; i++) {
 			for (int j = 0; j < BOARD_WIDTH; j++) {
@@ -60,15 +50,14 @@ System.out.println(pathSep);
 		return currentTiles;
 	}
 
+	// drawTile at index (i,j)
 	private void drawTile(int i, int j) {
 		Image tileImage;
 		int tileId = currentTiles[i][j];
 
 		if (tileId == -1)
-			//tileImage = Deck.getBlankTile().getImageIcon().getImage();
 			tileImage=Deck.getBlankTile().getImage();
 		else
-			//tileImage = Deck.getTile(tileId).getImageIcon().getImage();
 			tileImage=Deck.getTile(tileId).getImage();
 
 		boardGraphics = imgBoard.getGraphics();

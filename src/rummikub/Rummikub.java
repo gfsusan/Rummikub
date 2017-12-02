@@ -83,8 +83,8 @@ public class Rummikub extends JFrame {
 		gmPanel.setBackground(Color.ORANGE);
 		// TODO profile GUI
 
+		// TODO add the Profile GUI
 		userPanel = new UserPanel(playerRack);
-		userPanel.setBackground(Color.RED);
 		sortPanel = new JPanel();
 		sortPanel.setLayout(new GridLayout(2, 1));
 		JButton btnSort1 = new JButton("Sort by Number");
@@ -99,10 +99,9 @@ public class Rummikub extends JFrame {
 		top.add(board, BorderLayout.CENTER);
 		top.add(topRight, BorderLayout.EAST);
 
-		// TODO 삭제할 확률 높음 ㅋㅋ 임시
-		topRight.add(new JLabel("임시"), BorderLayout.NORTH);
-		topRight.add(gmPanel, BorderLayout.CENTER); // TODO or CENTER?
-		// TODO add the Profile GUI
+		topRight.add(new JLabel("임시"), BorderLayout.NORTH);		// TODO 삭제할 확률 높음 ㅋㅋ 임시
+		topRight.add(gmPanel, BorderLayout.CENTER);
+		
 
 		bottom.add(userPanel, BorderLayout.CENTER);
 		bottom.add(sortPanel, BorderLayout.EAST);

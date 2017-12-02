@@ -97,9 +97,6 @@ public class Tile {
 		return img;
 	}
 
-	public ImageIcon getImageIcon() {
-		return tileImageIcon;
-	}
 
 	public int getTileIndex() {
 		return (tileID / 2) + 1;
