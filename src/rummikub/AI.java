@@ -1,9 +1,10 @@
 package rummikub;
 
-public class AI {
+public class AI extends Player {
 
 	public AI(Rack myRack) {
-		// TODO Auto-generated constructor stub
+		super(myRack);
 	}
 
+	
 }

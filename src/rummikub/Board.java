@@ -11,10 +11,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class Board extends JPanel {
-	BoardListener bl;
+	private BoardListener bl;
 
-	Image imgBoard;
-	Graphics boardGraphics;
+	private Image imgBoard;
+	private Graphics boardGraphics;
 
 	// number of TileSets
 	private int nTileSets = 0;
@@ -22,8 +22,8 @@ public class Board extends JPanel {
 	public static final int WIDTH = 22;
 	public static final int HEIGHT = 8;
 
-	private int[][] currentTiles = new int[HEIGHT][WIDTH];
-	private int[][] previousTiles = new int[HEIGHT][WIDTH];
+	private static int[][] currentTiles = new int[HEIGHT][WIDTH];
+	private static int[][] previousTiles = new int[HEIGHT][WIDTH];
 
 	public Board() {
 		super();
@@ -49,6 +49,10 @@ public class Board extends JPanel {
 	public int[][] getCurrentTiles() {
 		return currentTiles;
 	}
+	
+	public int getCurrentTile(int i, int j) {
+		return currentTiles[i][j];
+	}
 
 	// drawTile at index (i,j)
 	private void drawTile(int i, int j) {
@@ -56,9 +60,9 @@ public class Board extends JPanel {
 		int tileId = currentTiles[i][j];
 
 		if (tileId == -1)
-			tileImage=Deck.getBlankTile().getImage();
+			tileImage = Deck.getBlankTile().getImage();
 		else
-			tileImage=Deck.getTile(tileId).getImage();
+			tileImage = Deck.getTile(tileId).getImage();
 
 		boardGraphics = imgBoard.getGraphics();
 		boardGraphics.drawImage(tileImage, j * 45, i * 60, this);
@@ -83,6 +87,25 @@ public class Board extends JPanel {
 
 	public Board getBoard() {
 		return this;
+	}
+
+	public void reset() {
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				currentTiles[i][j] = previousTiles[i][j];
+			}
+		}
+		repaint();
+
+	}
+
+	public boolean isEmpty(int i, int j) {
+		return (currentTiles[i][j] == -1);
+	}
+	
+	public void addTile(int i, int j) {
+		currentTiles[i][j]=GameManagerPanel.getMessenger();
+		
 	}
 
 }

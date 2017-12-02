@@ -17,18 +17,18 @@ public class Rummikub extends JFrame {
 	// top GUI
 	private Board board;
 	private JPanel topRight;
-	private GameMangerPanel gmPanel;
+	private GameManagerPanel gmPanel;
 	private JPanel space;
 
 	// bottom GUI
-	private RackPanel rackPanel;
+	private Rack playerRackPanel;
 	private JPanel sortPanel;
 
 	private BoardChecker bc;
 
 	final int RACK_SIZE = 14;
 	private Deck deck; // CompleteTileSet
-	private Rack playerRack;
+
 	private Rack aiRack;
 
 	AI ai;
@@ -43,7 +43,7 @@ public class Rummikub extends JFrame {
 		deck = new Deck();
 
 		// 플레이어의 Rack 생성
-		playerRack = new Rack();
+		playerRackPanel = new Rack();
 		aiRack = new Rack();
 
 		// Board and BoardChecker
@@ -51,7 +51,7 @@ public class Rummikub extends JFrame {
 		bc = new BoardChecker(board);
 
 		// player와 AI를 생성
-		player = new Player(playerRack);
+		player = new Player(playerRackPanel);
 		ai = new AI(aiRack);
 
 		///////////////////////////////////////////////////////
@@ -80,7 +80,7 @@ public class Rummikub extends JFrame {
 		// topRight.setPreferredSize(new Dimension(300, 600));
 
 		// manager
-		gmPanel = new GameMangerPanel(playerRack, aiRack);
+		gmPanel = new GameManagerPanel(board, player, ai);
 		gmPanel.setBackground(Color.ORANGE);
 		// TODO profile GUI
 
@@ -88,7 +88,7 @@ public class Rummikub extends JFrame {
 		space.setPreferredSize(new Dimension(0, 30));
 
 		// TODO add the Profile GUI
-		rackPanel = new RackPanel(playerRack);
+		
 		sortPanel = new JPanel();
 		sortPanel.setLayout(new GridLayout(2, 1));
 		JButton btnSort1 = new JButton("Sort by Number");
@@ -106,14 +106,12 @@ public class Rummikub extends JFrame {
 
 		topRight.add(gmPanel, BorderLayout.CENTER);
 
-		bottom.add(rackPanel, BorderLayout.CENTER);
+		bottom.add(playerRackPanel, BorderLayout.CENTER);
 		bottom.add(sortPanel, BorderLayout.EAST);
 
 		sortPanel.add(btnSort1);
 		sortPanel.add(btnSort2);
 
-		// rack이 위치하는 rackPanel
-		rackPanel = new RackPanel(playerRack);
 
 		pack();
 		setVisible(true);

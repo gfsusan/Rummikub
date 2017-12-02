@@ -37,7 +37,8 @@ public class Tile {
 			pathSep = "\\\\";
 		}
 
-		String imagePath = "./" + "pic" + pathSep + this.getColor() + ".gif";
+		String imagePath = "./" + "pic" + pathSep + this.getColor() + ".png";
+		System.out.println(imagePath);
 		img = ImageIO.read(new File(imagePath));
 	}
 
@@ -52,7 +53,8 @@ public class Tile {
 			pathSep = "\\\\";
 		}
 
-		String imagePath = "./" + "pic" + pathSep + this.getColor() + tileNum + ".gif";
+		String imagePath = "./" + "pic" + pathSep + this.getColor() + tileNum + ".png";
+		System.out.println(imagePath);
 		img = ImageIO.read(new File(imagePath));
 	}
 

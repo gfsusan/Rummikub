@@ -4,9 +4,9 @@ package rummikub;
  * represents the human player
  */
 public class Player {
-	Rack rack;
+	private Rack rack;
 	// tileTaken¿∫ « ø‰ X
-	boolean isTurn, tilePlaced;
+	private boolean isTurn, tilePlaced;
 
 	public Player(Rack playerRack) {
 		this.rack = playerRack;
@@ -20,16 +20,27 @@ public class Player {
 	}
 
 	public void setTilePlaced(boolean tilePlaced) {
-		this.tilePlaced=tilePlaced;
+		this.tilePlaced = tilePlaced;
 	}
-	
+
 	//
 	public boolean isTurn() {
 		return this.isTurn;
 	}
-	
+
 	public boolean tilePlaced() {
 		return this.tilePlaced;
 	}
 
+	public Rack getRack() {
+		return rack;
+	}
+
+	public boolean hasRegistered() {
+		return rack.hasRegistered();
+	}
+
+	public void drawFourTiles() {
+		rack.drawFourTiles();
+	}
 }
