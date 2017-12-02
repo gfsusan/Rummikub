@@ -4,7 +4,7 @@ import java.awt.Image;
 
 import javax.swing.*;
 
-public class InfoPanel extends JPanel {
+public class GameMangerPanel extends JPanel {
 	Rummikub game;
 	
 	JButton BtnQuit;
@@ -20,8 +20,8 @@ public class InfoPanel extends JPanel {
 	JPanel buttonPanel;
 
 	
-	public InfoPanel(Deck deck, Rack playerRack) {
-		
+	public GameMangerPanel(Rack playerRack, Rack aiRack) {
+		//TODO 
 	}
 
 }

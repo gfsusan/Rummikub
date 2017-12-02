@@ -12,10 +12,12 @@ import javax.swing.JPanel;
  * Rack class에 있던 display함수 가져오기
  */
 public class UserPanel extends JPanel {
+		
 	RackListener rl;
 	Image originalRack;
 	Image tileImage, blankImage;
 	Graphics tilesGraphics;
+	
 	String pathSep;
 
 	Rack playerRack;
@@ -26,7 +28,7 @@ public class UserPanel extends JPanel {
 
 	public UserPanel(Rack playerRack) {
 		super();
-		this.setPreferredSize(new Dimension(1000, 80));
+		this.setPreferredSize(new Dimension(playerRack.WIDTH*45,playerRack.HEIGHT*60));
 
 		// add MouseListener
 		rl = new RackListener(playerRack);
@@ -35,11 +37,6 @@ public class UserPanel extends JPanel {
 		// set playerRack
 		this.playerRack = playerRack;
 
-		pathSep = System.getProperty("file.separator");
-		if (pathSep.equals("\\")) {
-			pathSep = "\\\\";
-		}
-		blankImage = (new ImageIcon("pics" + pathSep + "blank.gif")).getImage();
 	}
 
 	public void drawTile(int i, int j) {
