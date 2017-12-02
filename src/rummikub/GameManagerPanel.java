@@ -39,6 +39,9 @@ public class GameManagerPanel extends JPanel {
 		btnEndTurn = new JButton("End Turn");
 		btnResetBoard = new JButton("Reset Board");
 
+		ActionEventHandler handler=new ActionEventHandler();
+		btnEndTurn.addActionListener(handler);
+		btnResetBoard.addActionListener(handler);
 		profile = new JLabel("Profile goes here.");
 		space = new JLabel("space");
 		space.setBackground(Color.RED);

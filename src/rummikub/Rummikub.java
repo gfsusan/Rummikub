@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.*;
@@ -19,6 +21,9 @@ public class Rummikub extends JFrame {
 	private JPanel topRight;
 	private GameManagerPanel gmPanel;
 	private JPanel space;
+
+	JButton btnSort1;
+	JButton btnSort2;
 
 	// bottom GUI
 	private Rack playerRackPanel;
@@ -88,11 +93,11 @@ public class Rummikub extends JFrame {
 		space.setPreferredSize(new Dimension(0, 30));
 
 		// TODO add the Profile GUI
-		
+
 		sortPanel = new JPanel();
 		sortPanel.setLayout(new GridLayout(2, 1));
-		JButton btnSort1 = new JButton("Sort by Number");
-		JButton btnSort2 = new JButton("Sort by Color");
+		btnSort1 = new JButton("Sort by Number");
+		btnSort2 = new JButton("Sort by Color");
 
 		// add Components
 		this.add(back);
@@ -112,6 +117,9 @@ public class Rummikub extends JFrame {
 		sortPanel.add(btnSort1);
 		sortPanel.add(btnSort2);
 
+		ActionEventHandler handler = new ActionEventHandler();
+		btnSort1.addActionListener(handler);
+		btnSort2.addActionListener(handler);
 
 		pack();
 		setVisible(true);
@@ -125,6 +133,20 @@ public class Rummikub extends JFrame {
 
 	public static void main(String[] args) throws IOException {
 		Rummikub game = new Rummikub("Rummikub");
+	}
+
+	class ActionEventHandler implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == btnSort1) {
+				playerRackPanel.sortByNumber();
+			}
+			if (e.getSource() == btnSort2) {
+				playerRackPanel.sortByColor();
+			}
+		}
+
 	}
 
 }

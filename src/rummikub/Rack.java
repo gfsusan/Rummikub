@@ -39,6 +39,10 @@ public class Rack extends JPanel {
 		setPreferredSize(new Dimension(WIDTH * 45, HEIGHT * 60));
 		setVisible(true);
 
+		// Deal
+		for (int i = 0; i < INITIAL_DEAL; i++)
+			currentTiles.add(Deck.takeTileFromDeck());
+		
 		// add Rack Listener and Mouse Listener
 		rl = new RackListener(this);
 		this.addMouseListener(rl);
@@ -49,8 +53,8 @@ public class Rack extends JPanel {
 			else
 				currentTiles2D[i / WIDTH][i % WIDTH] = -1;
 		}
-		for (int i = 0; i < INITIAL_DEAL; i++)
-			currentTiles.add(Deck.takeTileFromDeck());
+		
+
 
 		saveCurrentRack();
 	}
@@ -65,7 +69,7 @@ public class Rack extends JPanel {
 
 	public void reset() {
 		currentTiles = new ArrayList<Integer>(previousTiles);
-
+		repaint();
 	}
 
 	public void drawFourTiles() {
@@ -90,7 +94,7 @@ public class Rack extends JPanel {
 
 	public void sortByNumber() {
 		// TODO ;
-		for (int i = currentTiles.size(); i > 0; i--) {
+		for (int i = currentTiles.size()-1; i >= 0; i--) {
 			for (int j = 0; j < i; j++) {
 				if (currentTiles.get(j) % 26 > currentTiles.get(j + 1) % 26) {
 					currentTiles.add(j, currentTiles.get(j + 1));
@@ -98,10 +102,12 @@ public class Rack extends JPanel {
 				}
 			}
 		}
+		repaint();
 	}
 
 	public void sortByColor() {
 		Collections.sort(currentTiles);
+		repaint();
 	}
 
 	public void drawTile(int i, int j) {
