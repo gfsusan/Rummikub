@@ -25,6 +25,8 @@ public class Board extends JPanel {
 	private static int[][] currentTiles = new int[HEIGHT][WIDTH];
 	private static int[][] previousTiles = new int[HEIGHT][WIDTH];
 
+	private ArrayList<TileSet> setList;
+
 	public Board() {
 		super();
 		this.setLayout(new FlowLayout());
@@ -53,6 +55,91 @@ public class Board extends JPanel {
 	public int getCurrentTile(int i, int j) {
 		return currentTiles[i][j];
 	}
+
+	public Board getBoard() {
+		return this;
+	}
+
+	public void reset() {
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				currentTiles[i][j] = previousTiles[i][j];
+			}
+		}
+		repaint();
+	}
+
+	public boolean isEmpty(int i, int j) {
+		return (currentTiles[i][j] == -1);
+	}
+
+	public void addTile(int i, int j) {
+		currentTiles[i][j] = GameManagerPanel.getMessenger();
+
+	}
+
+	////////////////////////////////////////
+	// Board Check
+	////////////////////////////////////////
+	private void updateTileSets() {
+		boolean inGroup = false;
+		ArrayList<Integer> tempset = new ArrayList<Integer>();
+		setList = new ArrayList<TileSet>();
+
+		for (int i = 0; i < HEIGHT; i++) {
+			inGroup = false;
+			for (int j = 0; j < WIDTH; j++) {
+				if (currentTiles[i][j] == -1) {
+					if (inGroup) {
+						inGroup = false;
+						setList.add(new TileSet(tempset));// numGroups++;
+					}
+				} else {
+					if (inGroup) {
+						// add to group
+						tempset.add(currentTiles[i][j]);
+					} else {
+						inGroup = true;
+						tempset = new ArrayList<Integer>();
+						// initialize new group
+						tempset.add(currentTiles[i][j]);
+					}
+				}
+			}
+		}		
+		
+		/* TODO 가로줄마다 initialize 하면, 한줄에 2개의 tileSet이 있으면 ??
+		for (int i = 0; i < HEIGHT; i++) { // 가로 (i줄)
+		
+			ArrayList<Integer> tempSet = new ArrayList<Integer>();
+			for (int j = 0; j < WIDTH; j++) { // i줄 j칸
+				if (currentTiles[i][j] == -1) { // blank tile
+					if (!tempSet.isEmpty()) {
+						setList.add(new TileSet(tempSet)); // tempSet 완성-> setList에 추가
+						tempSet = new ArrayList<Integer>(); // tempSet 초기화
+					}
+				} else
+					tempSet.add(currentTiles[i][j]); // tempSet에 (i,j) tileID 저장
+			}
+		}
+		*/
+	}
+
+	// check if Board has validSets
+	public boolean checkBoard() {
+		updateTileSets();
+		for (int i = 0; i < setList.size(); i++) {
+			if (!setList.get(i).isValidSet())
+				return false;
+		}
+
+		return true;
+
+	}
+
+	//////////////////////////////////////
+	// GUI graphics
+	//////////////////////////////////////
 
 	// drawTile at index (i,j)
 	private void drawTile(int i, int j) {
@@ -86,26 +173,4 @@ public class Board extends JPanel {
 
 		System.out.println("Board - paint method called!");
 	}
-
-	public Board getBoard() {
-		return this;
-	}
-
-	public void reset() {
-		for (int i = 0; i < HEIGHT; i++) {
-			for (int j = 0; j < WIDTH; j++) {
-				currentTiles[i][j] = previousTiles[i][j];
-			}
-		}
-	}
-
-	public boolean isEmpty(int i, int j) {
-		return (currentTiles[i][j] == -1);
-	}
-
-	public void addTile(int i, int j) {
-		currentTiles[i][j] = GameManagerPanel.getMessenger();
-
-	}
-
 }

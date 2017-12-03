@@ -29,8 +29,6 @@ public class Rummikub extends JFrame {
 	private Rack playerRackPanel;
 	private JPanel sortPanel;
 
-	private BoardChecker bc;
-
 	final int RACK_SIZE = 14;
 	private Deck deck; // CompleteTileSet
 
@@ -53,7 +51,6 @@ public class Rummikub extends JFrame {
 
 		// Board and BoardChecker
 		board = new Board();
-		bc = new BoardChecker(board);
 
 		// player와 AI를 생성
 		player = new Player(playerRackPanel);
