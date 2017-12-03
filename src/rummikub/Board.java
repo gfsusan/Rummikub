@@ -49,7 +49,7 @@ public class Board extends JPanel {
 	public int[][] getCurrentTiles() {
 		return currentTiles;
 	}
-	
+
 	public int getCurrentTile(int i, int j) {
 		return currentTiles[i][j];
 	}
@@ -83,6 +83,8 @@ public class Board extends JPanel {
 			}
 		}
 		g.drawImage(imgBoard, 0, 0, this);
+
+		System.out.println("Board - paint method called!");
 	}
 
 	public Board getBoard() {
@@ -95,17 +97,15 @@ public class Board extends JPanel {
 				currentTiles[i][j] = previousTiles[i][j];
 			}
 		}
-		repaint();
-
 	}
 
 	public boolean isEmpty(int i, int j) {
 		return (currentTiles[i][j] == -1);
 	}
-	
+
 	public void addTile(int i, int j) {
-		currentTiles[i][j]=GameManagerPanel.getMessenger();
-		
+		currentTiles[i][j] = GameManagerPanel.getMessenger();
+
 	}
 
 }

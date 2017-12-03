@@ -42,21 +42,23 @@ public class Rack extends JPanel {
 		// Deal
 		for (int i = 0; i < INITIAL_DEAL; i++)
 			currentTiles.add(Deck.takeTileFromDeck());
-		
+
 		// add Rack Listener and Mouse Listener
 		rl = new RackListener(this);
 		this.addMouseListener(rl);
 
+		saveCurrentRack();
+	}
+
+	private void updateRack() {
 		for (int i = 0; i < HEIGHT * WIDTH; i++) {
-			if (i < this.getCurrentRackSize())
-				currentTiles2D[i / WIDTH][i % WIDTH] = getTileID(i);
+			if (i < this.currentTiles.size())
+				currentTiles2D[i / WIDTH][i % WIDTH] = currentTiles.get(i);
 			else
 				currentTiles2D[i / WIDTH][i % WIDTH] = -1;
 		}
-		
+		System.out.println("Rack updated!");
 
-
-		saveCurrentRack();
 	}
 
 	public void saveCurrentRack() {
@@ -69,13 +71,13 @@ public class Rack extends JPanel {
 
 	public void reset() {
 		currentTiles = new ArrayList<Integer>(previousTiles);
-		repaint();
 	}
 
 	public void drawFourTiles() {
 		for (int i = 0; i < DRAW_NUM; i++) {
 			currentTiles.add(Deck.takeTileFromDeck());
 		}
+		repaint();
 	}
 
 	public void removeTile(int index) {
@@ -84,17 +86,14 @@ public class Rack extends JPanel {
 
 	// TODO public int getTileNumber(int tileIndex)
 
-	public int getCurrentRackSize() {
-		return currentTiles.size();
-	}
-
 	public boolean hasRegistered() {
 		return (currentTiles.size() != previousTiles.size());
 	}
 
 	public void sortByNumber() {
 		// TODO ;
-		for (int i = currentTiles.size()-1; i >= 0; i--) {
+		System.out.println("sort by number");
+		for (int i = currentTiles.size() - 1; i >= 0; i--) {
 			for (int j = 0; j < i; j++) {
 				if (currentTiles.get(j) % 26 > currentTiles.get(j + 1) % 26) {
 					currentTiles.add(j, currentTiles.get(j + 1));
@@ -107,6 +106,9 @@ public class Rack extends JPanel {
 
 	public void sortByColor() {
 		Collections.sort(currentTiles);
+		for (int counter : currentTiles) {
+			System.out.println(counter);
+		}
 		repaint();
 	}
 
@@ -124,6 +126,7 @@ public class Rack extends JPanel {
 	}
 
 	public void paint(Graphics g) {
+		updateRack();
 		if (imgRack == null) {
 			imgRack = createImage(WIDTH * 45, HEIGHT * 60);
 			tilesGraphics = imgRack.getGraphics();
@@ -137,6 +140,7 @@ public class Rack extends JPanel {
 			}
 		}
 		g.drawImage(imgRack, 0, 0, this);
+		System.out.println("Rack - paint method called!");
 	}
 
 	public Rack getRack() {

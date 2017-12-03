@@ -43,4 +43,5 @@ public class Player {
 	public void drawFourTiles() {
 		rack.drawFourTiles();
 	}
+	
 }

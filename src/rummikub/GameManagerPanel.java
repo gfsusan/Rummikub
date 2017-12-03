@@ -39,7 +39,7 @@ public class GameManagerPanel extends JPanel {
 		btnEndTurn = new JButton("End Turn");
 		btnResetBoard = new JButton("Reset Board");
 
-		ActionEventHandler handler=new ActionEventHandler();
+		ActionEventHandler handler = new ActionEventHandler();
 		btnEndTurn.addActionListener(handler);
 		btnResetBoard.addActionListener(handler);
 		profile = new JLabel("Profile goes here.");
@@ -82,8 +82,15 @@ public class GameManagerPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == btnEndTurn) {
-				if (!player.hasRegistered())
-					player.drawFourTiles();
+				// TODO 게임이 끝났는지 판별 - 만약 computer 쪽에서 끝나면???
+				if (!Deck.isEmpty()) {
+					// TODO 플레이어의 턴이 끝났는지 판별 가 아니라 Board가 valid한지 판별아님 ?
+					if (!player.hasRegistered())
+						player.drawFourTiles();
+					else
+						JOptionPane.showMessageDialog(null, "Your turn has not ended yet. ", "Rummikub", JOptionPane.ERROR_MESSAGE);
+				} else
+					; // TODO game end
 			} else if (e.getSource() == btnResetBoard) {
 				player.getRack().reset();
 				board.reset();

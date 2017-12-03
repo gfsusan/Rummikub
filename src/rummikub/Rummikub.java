@@ -140,10 +140,10 @@ public class Rummikub extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == btnSort1) {
-				playerRackPanel.sortByNumber();
+				player.getRack().sortByNumber();
 			}
 			if (e.getSource() == btnSort2) {
-				playerRackPanel.sortByColor();
+				player.getRack().sortByColor();
 			}
 		}
 

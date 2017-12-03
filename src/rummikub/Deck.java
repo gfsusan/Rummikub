@@ -60,4 +60,8 @@ public class Deck {
 		return rID;
 	}
 
+	public static boolean isEmpty() {
+		return remains.size() == 0;
+	}
+
 }
