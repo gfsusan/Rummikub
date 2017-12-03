@@ -66,6 +66,7 @@ public class Board extends JPanel {
 				currentTiles[i][j] = previousTiles[i][j];
 			}
 		}
+		//TODO reset 할 때 왜 오른쪽 위에 tile이 생기지???
 		repaint();
 	}
 

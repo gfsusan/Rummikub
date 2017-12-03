@@ -77,20 +77,21 @@ public class GameManagerPanel extends JPanel {
 		return messenger;
 	}
 
+	
 	private class ActionEventHandler implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == btnEndTurn) {
-				// TODO 게임이 끝났는지 판별 - 만약 computer 쪽에서 끝나면???
-				if (!Deck.isEmpty()) {
+				if (true) { // TODO 게임이 끝났는지 판별 - 만약 computer 쪽에서 끝나면???
 					// TODO 플레이어의 턴이 끝났는지 판별 가 아니라 Board가 valid한지 판별아님 ?
 					if (!player.hasRegistered())
 						player.drawFourTiles();
+						// TODO turn 끝남처리 , current 을 previous으로 저장하는거 외에 할거있나?
 					else
 						JOptionPane.showMessageDialog(null, "Your turn has not ended yet. ", "Rummikub", JOptionPane.ERROR_MESSAGE);
-				} else
-					; // TODO game end
+				} else // if Deck is empty ,...
+					Rummikub.gameOver("Game Over"); // TODO game end
 			} else if (e.getSource() == btnResetBoard) {
 				player.getRack().reset();
 				board.reset();

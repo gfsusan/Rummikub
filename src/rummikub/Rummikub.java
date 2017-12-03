@@ -132,6 +132,13 @@ public class Rummikub extends JFrame {
 		Rummikub game = new Rummikub("Rummikub");
 	}
 
+	public static void gameOver(String message) {
+		// TODO
+		System.out.println("Game Over - " + message);
+
+		System.exit(-1);
+	}
+
 	class ActionEventHandler implements ActionListener {
 
 		@Override

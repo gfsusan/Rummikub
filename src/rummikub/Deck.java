@@ -51,13 +51,20 @@ public class Deck {
 	}
 
 	public static int takeTileFromDeck() {
-		int random = (int) (Math.random() * remains.size());
-		int rID = remains.get(random);
-		remains.remove(random);
+		int random;
+		int rID;
 
-		System.out.println("tile taken from Deck : " + rID);
+		if (remains.size() != 0) {
+			random = (int) (Math.random() * remains.size());
+			rID = remains.get(random);
+			remains.remove(random);
 
-		return rID;
+			System.out.println("tile taken from Deck : " + rID);
+			return rID;
+		} else {
+			Rummikub.gameOver("No card in Deck!");
+			return -1;
+		}
 	}
 
 	public static boolean isEmpty() {

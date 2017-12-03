@@ -71,12 +71,14 @@ public class Rack extends JPanel {
 
 	public void reset() {
 		currentTiles = new ArrayList<Integer>(previousTiles);
+		repaint();
 	}
 
 	public void drawFourTiles() {
 		for (int i = 0; i < DRAW_NUM; i++) {
 			currentTiles.add(Deck.takeTileFromDeck());
 		}
+		saveCurrentRack();
 		repaint();
 	}
 
@@ -91,8 +93,6 @@ public class Rack extends JPanel {
 	}
 
 	public void sortByNumber() {
-		// TODO ;
-		System.out.println("sort by number");
 		for (int i = currentTiles.size() - 1; i >= 0; i--) {
 			for (int j = 0; j < i; j++) {
 				if (currentTiles.get(j) % 26 > currentTiles.get(j + 1) % 26) {
@@ -106,9 +106,6 @@ public class Rack extends JPanel {
 
 	public void sortByColor() {
 		Collections.sort(currentTiles);
-		for (int counter : currentTiles) {
-			System.out.println(counter);
-		}
 		repaint();
 	}
 
