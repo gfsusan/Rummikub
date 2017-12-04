@@ -67,9 +67,12 @@ public class GameManagerPanel extends JPanel {
 							Rummikub.gameWin("rack is empty!");
 						if (!player.hasRegistered()) {
 							player.drawFourTiles();
+							player.getRack().saveCurrentRack();
+							board.saveCurrentTiles();
 							// TODO turn 끝남처리 , current 을 previous으로 저장하는거 외에 할거있나?
 						} else
 							ai.takeTurn();
+						
 					} else {
 						// error 메시지 출력 - 플레이어가 board 수정하고 다시 버튼클릭해야함
 						JOptionPane.showMessageDialog(null, "Your turn has not ended yet. ", "Rummikub",

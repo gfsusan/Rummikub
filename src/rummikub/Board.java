@@ -46,9 +46,9 @@ public class Board extends JPanel {
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < WIDTH; j++) {
 				currentTiles[i][j] = -1;
-				previousTiles[i][j] = -1;
 			}
 		}
+		saveCurrentTiles();
 	}
 
 	public int[][] getCurrentTiles() {
@@ -70,8 +70,20 @@ public class Board extends JPanel {
 		repaint();
 	}
 
+	public ArrayList<TileSet> getSet() {
+		return setList;
+	}
+
 	public Board getBoard() {
 		return this;
+	}
+
+	public void saveCurrentTiles() {
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				previousTiles[i][j] = currentTiles[i][j];
+			}
+		}
 	}
 
 	public void reset() {
@@ -127,16 +139,6 @@ public class Board extends JPanel {
 			}
 		}
 
-		/*
-		 * TODO 가로줄마다 initialize 하면, 한줄에 2개의 tileSet이 있으면 ?? for (int i = 0; i < HEIGHT;
-		 * i++) { // 가로 (i줄)
-		 * 
-		 * ArrayList<Integer> tempSet = new ArrayList<Integer>(); for (int j = 0; j <
-		 * WIDTH; j++) { // i줄 j칸 if (currentTiles[i][j] == -1) { // blank tile if
-		 * (!tempSet.isEmpty()) { setList.add(new TileSet(tempSet)); // tempSet 완성->
-		 * setList에 추가 tempSet = new ArrayList<Integer>(); // tempSet 초기화 } } else
-		 * tempSet.add(currentTiles[i][j]); // tempSet에 (i,j) tileID 저장 } }
-		 */
 	}
 
 	// check if Board has validSets

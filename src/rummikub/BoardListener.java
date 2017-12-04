@@ -67,40 +67,11 @@ public class BoardListener implements MouseListener, MouseMotionListener {
 				Rummikub.toggleAdding();
 				Rummikub.setTileFromBoard(false);
 			}
-			
 		}
-
-		/*
-		 * if (Rack.isHoldingFromRack()) { // rack->board if ((xIndex < Board.WIDTH) &&
-		 * (yIndex < Board.HEIGHT)) { // board 범위 내 if (board.isEmptyCell(xIndex,
-		 * yIndex)) { // cell is empty board.addTile(xIndex, yIndex);
-		 * System.out.println("tile is added on the board"); } else { // cell is not
-		 * empty System.out.println("not an empty cell - cannot put tile here (" +
-		 * xIndex + ", " + yIndex + ")"); }
-		 * 
-		 * } else { // board 범위 밖 System.out.println("not existing place"); } } else {
-		 * // board->board if ((xIndex < Board.WIDTH) && (yIndex < Board.HEIGHT)) { if
-		 * (!board.isEmptyCell(xIndex, yIndex)) { // cell has a tile pressedTileID =
-		 * board.getCurrentTile(xIndex, yIndex); // tile 안 없애도 되나? } else { // cell is
-		 * empty ; } } }
-		 */
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent event) {
-		// TODO Auto-generated method stub
-		/*
-		 * if (dragging && isHoldingFromBoard()) { // board->board toX =
-		 * event.getX()/45; toY = event.getY()/60;
-		 * 
-		 * if(toX < Board.WIDTH && toY < Board.HEIGHT) { if (!board.isEmptyCell(toX,
-		 * toY)) { // 옮기려는 곳이 이미 타일이 있음 //board.moveTile(fromX, fromY, toX, toY); } else
-		 * {
-		 * 
-		 * }
-		 * 
-		 * } }
-		 */
 
 	}
 
