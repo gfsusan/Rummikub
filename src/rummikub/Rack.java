@@ -18,9 +18,6 @@ public class Rack extends JPanel {
 	protected static final int INITIAL_DEAL = 14;
 	protected static final int DRAW_NUM = 4;
 
-	protected ArrayList<Integer> currentTiles = new ArrayList<Integer>();
-	protected ArrayList<Integer> previousTiles = new ArrayList<Integer>();
-
 	protected RackListener rl;
 	protected Image imgRack;
 	protected Image tileImage, blankImage;
@@ -39,9 +36,15 @@ public class Rack extends JPanel {
 		setPreferredSize(new Dimension(WIDTH * 45, HEIGHT * 60));
 		setVisible(true);
 
+		for (int i = 0; i < HEIGHT; i++)
+			for (int j = 0; j < WIDTH; j++)
+				currentTiles2D[i][j] = -1;
+
 		// Deal
-		for (int i = 0; i < INITIAL_DEAL; i++)
-			currentTiles.add(Deck.takeTileFromDeck());
+		for (int i = 0; i < INITIAL_DEAL; i++) {
+			int index = firstBlankIndex();
+			currentTiles2D[index / WIDTH][index % WIDTH] = Deck.takeTileFromDeck();
+		}
 
 		// add Rack Listener and Mouse Listener
 		rl = new RackListener(this);
@@ -50,10 +53,90 @@ public class Rack extends JPanel {
 		saveCurrentRack();
 	}
 
-	protected void drawTile() {
-		// find an empty cell of rack
-		
+	///////////////////////////////////
+	// check - return boolean
+	///////////////////////////////////
+
+	protected boolean isFull() {
+		return (getCurrentSize() >= HEIGHT * WIDTH);
 	}
+
+	public boolean isEmpty() {
+		return (getCurrentSize() == 0);
+	}
+
+	public boolean isEmptyCell(int y, int x) {
+		return currentTiles2D[y][x] == -1;
+	}
+
+	public boolean hasRegistered() {
+		return (getCurrentSize() != getPreviousSize());
+	}
+
+	//////////////////////////////
+	// get
+	//////////////////////////////
+
+	public Rack getRack() {
+		return this;
+	}
+
+	private int getCurrentSize() {
+		int counter = 0;
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				if (currentTiles2D[i][j] != -1)
+					counter++;
+			}
+		}
+		return counter;
+	}
+
+	private int getPreviousSize() {
+		int counter = 0;
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				if (previousTiles2D[i][j] != -1)
+					counter++;
+			}
+		}
+		return counter;
+	}
+
+	public int getTileAt(int y, int x) {
+		return currentTiles2D[y][x];
+	}
+
+	private ArrayList<Integer> make2Dto1D() {
+		ArrayList<Integer> arrayList = new ArrayList<Integer>();
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				if (currentTiles2D[i][j] != -1)
+					arrayList.add(currentTiles2D[i][j]);
+			}
+		}
+		return arrayList;
+	}
+
+	private void make1Dto2D(ArrayList<Integer> arrayList) {
+		for (int i = 0; i < arrayList.size(); i++) {
+			currentTiles2D[i / WIDTH][i % WIDTH] = arrayList.get(i);
+		}
+	}
+
+	// TODO public int getTileNumber(int tileIndex)
+
+	/////////////////////////////
+	// remove
+	////////////////////////////
+
+	public void removeTileAt(int y, int x) {
+		currentTiles2D[y][x] = -1;
+	}
+
+	/////////////////////////////////////////
+	// save board or add to board
+	/////////////////////////////////////////
 
 	public void saveCurrentRack() {
 		for (int i = 0; i < HEIGHT; i++) {
@@ -61,10 +144,6 @@ public class Rack extends JPanel {
 				previousTiles2D[i][j] = currentTiles2D[i][j];
 			}
 		}
-	}
-
-	public int getTileID(int y, int x) {
-		return currentTiles2D[y][x];
 	}
 
 	public void reset() {
@@ -76,43 +155,58 @@ public class Rack extends JPanel {
 		repaint();
 	}
 
+	// method that finds the first blank tile in currentTiles2D
+	private int firstBlankIndex() {
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				if (currentTiles2D[i][j] == -1)
+					return (i * WIDTH + j);
+			}
+		}
+		return -1;
+
+	}
+
 	public void drawFourTiles() {
 		for (int i = 0; i < DRAW_NUM; i++) {
-			if (!isFull())
-				currentTiles.add(Deck.takeTileFromDeck());
+			int index = firstBlankIndex();
+			if (index != -1)
+				currentTiles2D[index / WIDTH][index % WIDTH] = Deck.takeTileFromDeck();
 			else
-				Rummikub.gameOver("Player rack is full!");
+				Rummikub.gameOver("Rack is full!");
 		}
 		saveCurrentRack();
 		repaint();
 	}
 
-	public void removeTile(int index) {
-		currentTiles.remove(index);
-	}
-
-	// TODO public int getTileNumber(int tileIndex)
-
-	public boolean hasRegistered() {
-		return (currentTiles.size() != previousTiles.size());
-	}
+	//////////////////////////////
+	// sort
+	//////////////////////////////
 
 	public void sortByNumber() {
-		for (int i = currentTiles.size() - 1; i >= 0; i--) {
+		ArrayList<Integer> temp = make2Dto1D();
+		for (int i = temp.size() - 1; i >= 0; i--) {
 			for (int j = 0; j < i; j++) {
-				if (currentTiles.get(j) % 26 > currentTiles.get(j + 1) % 26) {
-					currentTiles.add(j, currentTiles.get(j + 1));
-					currentTiles.remove(j + 2);
+				if (temp.get(j) % 26 > temp.get(j + 1) % 26) {
+					temp.add(j, temp.get(j + 1));
+					temp.remove(j + 2);
 				}
 			}
 		}
+		make1Dto2D(temp);
 		repaint();
 	}
 
 	public void sortByColor() {
-		Collections.sort(currentTiles);
+		ArrayList<Integer> temp = make2Dto1D();
+		Collections.sort(temp);
+		make1Dto2D(temp);
 		repaint();
 	}
+
+	//////////////////////////////////////////////////
+	// GUI Graphics
+	/////////////////////////////////////////////////
 
 	public void drawTile(int i, int j) {
 		Image tileImage;
@@ -122,6 +216,8 @@ public class Rack extends JPanel {
 			tileImage = Deck.getBlankTile().getImage();
 		else
 			tileImage = Deck.getTile(tileId).getImage();
+
+		System.out.println(tileId);
 
 		tilesGraphics = imgRack.getGraphics();
 		tilesGraphics.drawImage(tileImage, j * 45, i * 60, this);
@@ -142,41 +238,6 @@ public class Rack extends JPanel {
 		}
 		g.drawImage(imgRack, 0, 0, this);
 		System.out.println("Rack - paint method called!");
-	}
-
-	public Rack getRack() {
-		return this;
-	}
-
-	private int getNumberOfTiles() {
-		int counter = 0;
-		for (int i = 0; i < HEIGHT; i++) {
-			for (int j = 0; j < WIDTH; j++) {
-				if (currentTiles2D[i][j] != -1)
-					counter++;
-			}
-		}
-		return counter;
-	}
-
-	protected boolean isFull() {
-		return (getNumberOfTiles() >= 48);
-	}
-
-	public boolean isEmpty() {
-		return (getNumberOfTiles() == 0);
-	}
-
-	public boolean isEmptyCell(int y, int x) {
-		return currentTiles2D[y][x] == -1;
-	}
-
-	public int getTileAt(int y, int x) {
-		return currentTiles2D[y][x];
-	}
-
-	public void removeTileAt(int y, int x) {
-
 	}
 
 }

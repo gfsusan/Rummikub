@@ -11,6 +11,6 @@ public class AI extends Player {
 	public void takeTurn() {
 		// turn !
 		System.out.println("AI took its turn.");
-		getRack().updateRack();
+		getRack().repaint();
 	}
 }
