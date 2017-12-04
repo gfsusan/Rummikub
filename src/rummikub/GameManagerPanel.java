@@ -11,21 +11,26 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class GameManagerPanel extends JPanel {
-	Board board;
-	Player player;
-	AI ai;
+	private Board board;
+	private Player player;
+	private AI ai;
 
-	JButton btnEndTurn;
-	JButton btnResetBoard;
+	private JButton btnEndTurn;
+	private JButton btnResetBoard;
 
-	JLabel profile;
-	JLabel space;
-	JPanel buttonPanel;
+	private JLabel profile;
+	private JLabel space;
+	private JPanel buttonPanel;
+
+	private int turn;
 
 	public GameManagerPanel(Board board, Player player, AI ai) {
 		this.board = board;
 		this.player = player;
 		this.ai = ai;
+
+		// initialize # of turn
+		turn = 0;
 
 		// TODO
 		setLayout(new BorderLayout());
@@ -61,26 +66,32 @@ public class GameManagerPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == btnEndTurn) {
-				if (true) { // TODO 게임이 끝났는지 판별 - 만약 computer 쪽에서 끝나면???
-					if (board.check()) {
-						if (player.getRack().isEmpty())
-							Rummikub.gameWin("rack is empty!");
-						if (!player.hasRegistered()) {
-							player.drawFourTiles();
-
-							// TODO turn 끝남처리 , current 을 previous으로 저장하는거 외에 할거있나?
-						}
-						player.getRack().saveCurrentRack();
-						board.saveCurrentTiles();
-						ai.takeTurn();
-
-					} else {
-						// error 메시지 출력 - 플레이어가 board 수정하고 다시 버튼클릭해야함
-						JOptionPane.showMessageDialog(null, "Your turn has not ended yet. ", "Rummikub",
-								JOptionPane.ERROR_MESSAGE);
+				// check if board is valid
+				if (board.check()) {
+					// if player's rack is empty, player wins
+					if (player.getRack().isEmpty())
+						Rummikub.gameWin("rack is empty!");
+					// else, if player has not registered, draw four tiles from deck
+					else if (!player.hasRegistered()) {
+						player.drawFourTiles();
 					}
-				} else // if game over,...
-					Rummikub.gameOver("Game Over"); // TODO game end
+
+					// initialize rack and board
+					player.getRack().saveCurrentRack();
+					board.saveCurrentTiles();
+
+					// ai's turn
+					ai.takeTurn();
+
+					// check # of turns
+					if (turn++ > 15)
+						Rummikub.gameOver("Game Over"); // TODO game end
+				} else {
+					// error 메시지 출력 - 플레이어가 board 수정하고 다시 버튼클릭해야함
+					JOptionPane.showMessageDialog(null, "Your turn has not ended yet. ", "Rummikub",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			// reset board
 			} else if (e.getSource() == btnResetBoard) {
 				player.getRack().reset();
 				board.reset();
