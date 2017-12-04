@@ -58,14 +58,16 @@ public class BoardListener implements MouseListener, MouseMotionListener {
 				Rummikub.setTileFromBoard(true);
 				board.removeTileAt(yIndex, xIndex);
 				Rummikub.toggleAdding();
-			}	
+			}
 		}
 		// 놓는 경우
 		else {
 			if (board.isEmptyCell(yIndex, xIndex)) {
 				board.addTileAt(yIndex, xIndex);
 				Rummikub.toggleAdding();
+				Rummikub.setTileFromBoard(false);
 			}
+			
 		}
 
 		/*

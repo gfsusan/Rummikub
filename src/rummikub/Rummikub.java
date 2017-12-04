@@ -158,7 +158,7 @@ public class Rummikub extends JFrame {
 	}
 
 	public static int getWhichTile() {
-		System.out.println("Tile to Add : "+ whichTile);
+		System.out.println("Tile to Add : " + whichTile);
 		return whichTile;
 	}
 
@@ -170,6 +170,15 @@ public class Rummikub extends JFrame {
 		isTileAdding = !isTileAdding;
 	}
 
+	public static boolean isAddingTile() {
+
+		return isTileAdding;
+	}
+	
+	public static boolean isTileFromBoard() {
+		return isTileFromBoard;
+	}
+	
 	class ActionEventHandler implements ActionListener {
 
 		@Override
@@ -184,9 +193,5 @@ public class Rummikub extends JFrame {
 
 	}
 
-	public static boolean isAddingTile() {
-
-		return isTileAdding;
-	}
 
 }

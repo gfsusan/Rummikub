@@ -173,24 +173,13 @@ public class Board extends JPanel {
 
 		if (imgBoard == null) {
 			imgBoard = createImage(WIDTH * 45, HEIGHT * 60);
-			/*
-			 * boardGraphics = imgBoard.getGraphics(); boardGraphics.setColor(new Color(250,
-			 * 218, 94)); boardGraphics.fillRect(0, 0, getWidth(), getHeight());
-			 */
-			String pathSep = System.getProperty("file.separator");
-			if (pathSep.equals("\\")) {
-				pathSep = "\\\\";
-			}
-
-			String imagePath = "./" + "pic" + pathSep + "board" + ".png";
+			String imagePath = "./pic\\board.png";
 			System.out.println(imagePath);
 			try {
 				imgBoard = ImageIO.read(new File(imagePath));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 
 		for (int i = 0; i < HEIGHT; i++) {
@@ -198,7 +187,9 @@ public class Board extends JPanel {
 				drawTile(i, j);
 			}
 		}
+
 		g.drawImage(imgBoard, 0, 0, this);
+		imgBoard = null;
 		System.out.println("Board - paint method called!");
 
 	}

@@ -39,21 +39,28 @@ public class RackListener implements MouseListener {
 
 		// 집는 경우
 		if (!Rummikub.isAddingTile()) {
-			if (!rack.isEmptyCell(xIndex, yIndex)) {
-				Rummikub.setWhichTile(rack.getTileAt(xIndex, yIndex));
+			if (!rack.isEmptyCell(yIndex, xIndex)) {
+				int id = rack.getTileAt(yIndex, xIndex);
+				System.out.println(id);
+				Rummikub.setWhichTile(id);
 				Rummikub.setTileFromBoard(false);
-				//rack.removeTileAt(xIndex, yIndex);
-			}	
+				rack.removeTileAt(yIndex, xIndex);
+				Rummikub.toggleAdding();
+			}
 		}
 		// 놓는 경우
 		else {
-			if (rack.isEmptyCell(xIndex, yIndex)) {
-				//rack.addTileAt(xIndex, yIndex);
+			if (rack.isEmptyCell(yIndex, xIndex)) {
+				// rack으로부터
+				if (!Rummikub.isTileFromBoard()) {
+					rack.addTileAt(yIndex, xIndex);
+					Rummikub.toggleAdding();
+					Rummikub.setTileFromBoard(false);
+				}
+				
 			}
 		}
-		Rummikub.toggleAdding();
 	}
-
 
 	@Override
 	public void mouseReleased(MouseEvent event) {
