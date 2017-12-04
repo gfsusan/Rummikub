@@ -38,6 +38,10 @@ public class Rummikub extends JFrame {
 
 	private Rack aiRack;
 
+	private static int whichTile;
+	private static boolean isTileAdding = false;
+	private static boolean isTileFromBoard = false;
+
 	AI ai;
 	Player player;
 
@@ -64,8 +68,6 @@ public class Rummikub extends JFrame {
 		// GUI
 		///////////////////////////////////////////////////////
 
-		// setSize(1000, 710);
-
 		setResizable(false);
 
 		back = new JPanel();
@@ -74,12 +76,12 @@ public class Rummikub extends JFrame {
 		top = new JPanel();
 		top.setLayout(new BorderLayout());
 		top.setBackground(Color.CYAN);
-		top.setPreferredSize(new Dimension(900, 510));
+		top.setPreferredSize(new Dimension(1190, 510));
 
 		bottom = new JPanel();
 		bottom.setLayout(new BorderLayout());
 		bottom.setBackground(Color.BLUE);
-		// bottom.setPreferredSize(new Dimension(1200, 200));
+		bottom.setPreferredSize(new Dimension(1190, 120));
 
 		topRight = new JPanel();
 		topRight.setLayout(new BorderLayout());
@@ -96,8 +98,13 @@ public class Rummikub extends JFrame {
 
 		sortPanel = new JPanel();
 		sortPanel.setLayout(new GridLayout(2, 1));
+		sortPanel.setPreferredSize(new Dimension(110, 120));
 		btnSort1 = new JButton("Sort by Number");
+		ImageIcon imgSort1 = new ImageIcon("./pic\\number.png");
+		btnSort1.setIcon(imgSort1);
 		btnSort2 = new JButton("Sort by Color");
+		ImageIcon imgSort2 = new ImageIcon("./pic\\color.png");
+		btnSort2.setIcon(imgSort2);
 
 		// add Components
 		this.add(back);
@@ -146,7 +153,23 @@ public class Rummikub extends JFrame {
 		System.out.println("You Won ! - " + message);
 	}
 
-	
+	public static void setWhichTile(int id) {
+		whichTile = id;
+	}
+
+	public static int getWhichTile() {
+		System.out.println("Tile to Add : "+ whichTile);
+		return whichTile;
+	}
+
+	public static void setTileFromBoard(boolean bool) {
+		isTileFromBoard = bool;
+	}
+
+	public static void toggleAdding() {
+		isTileAdding = !isTileAdding;
+	}
+
 	class ActionEventHandler implements ActionListener {
 
 		@Override
@@ -159,6 +182,11 @@ public class Rummikub extends JFrame {
 			}
 		}
 
+	}
+
+	public static boolean isAddingTile() {
+
+		return isTileAdding;
 	}
 
 }

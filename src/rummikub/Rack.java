@@ -15,22 +15,22 @@ import javax.swing.JPanel;
  * Rack class에 있던 display함수 가져오기
  */
 public class Rack extends JPanel {
-	private static final int INITIAL_DEAL = 14;
-	private static final int DRAW_NUM = 4;
+	protected static final int INITIAL_DEAL = 14;
+	protected static final int DRAW_NUM = 4;
 
-	private ArrayList<Integer> currentTiles = new ArrayList<Integer>();
-	private ArrayList<Integer> previousTiles = new ArrayList<Integer>();
+	protected ArrayList<Integer> currentTiles = new ArrayList<Integer>();
+	protected ArrayList<Integer> previousTiles = new ArrayList<Integer>();
 
-	RackListener rl;
-	Image imgRack;
-	Image tileImage, blankImage;
-	Graphics tilesGraphics;
+	protected RackListener rl;
+	protected Image imgRack;
+	protected Image tileImage, blankImage;
+	protected Graphics tilesGraphics;
 
-	public static final int WIDTH = 24;
-	public static final int HEIGHT = 2;
+	protected static final int WIDTH = 24;
+	protected static final int HEIGHT = 2;
 
-	private int[][] currentTiles2D = new int[HEIGHT][WIDTH];
-	private int[][] previousTiles2D = new int[HEIGHT][WIDTH];
+	protected int[][] currentTiles2D = new int[HEIGHT][WIDTH];
+	protected int[][] previousTiles2D = new int[HEIGHT][WIDTH];
 
 	public Rack() {
 		super();
@@ -50,27 +50,29 @@ public class Rack extends JPanel {
 		saveCurrentRack();
 	}
 
-	private void updateRack() {
-		for (int i = 0; i < HEIGHT * WIDTH; i++) {
-			if (i < this.currentTiles.size())
-				currentTiles2D[i / WIDTH][i % WIDTH] = currentTiles.get(i);
-			else
-				currentTiles2D[i / WIDTH][i % WIDTH] = -1;
-		}
-		System.out.println("Rack updated!");
-
+	protected void drawTile() {
+		// find an empty cell of rack
+		
 	}
 
 	public void saveCurrentRack() {
-		previousTiles = new ArrayList<Integer>(currentTiles);
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				previousTiles2D[i][j] = currentTiles2D[i][j];
+			}
+		}
 	}
 
-	public int getTileID(int index) {
-		return currentTiles.get(index);
+	public int getTileID(int y, int x) {
+		return currentTiles2D[y][x];
 	}
 
 	public void reset() {
-		currentTiles = new ArrayList<Integer>(previousTiles);
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				currentTiles2D[i][j] = previousTiles2D[i][j];
+			}
+		}
 		repaint();
 	}
 
@@ -126,11 +128,10 @@ public class Rack extends JPanel {
 	}
 
 	public void paint(Graphics g) {
-		updateRack();
 		if (imgRack == null) {
 			imgRack = createImage(WIDTH * 45, HEIGHT * 60);
 			tilesGraphics = imgRack.getGraphics();
-			tilesGraphics.setColor(new Color(56, 87, 35)); 
+			tilesGraphics.setColor(new Color(56, 87, 35));
 			tilesGraphics.fillRect(0, 0, getWidth(), getHeight());
 		}
 
@@ -147,11 +148,35 @@ public class Rack extends JPanel {
 		return this;
 	}
 
-	private boolean isFull() {
-		return currentTiles.size() >= 48;
+	private int getNumberOfTiles() {
+		int counter = 0;
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				if (currentTiles2D[i][j] != -1)
+					counter++;
+			}
+		}
+		return counter;
+	}
+
+	protected boolean isFull() {
+		return (getNumberOfTiles() >= 48);
 	}
 
 	public boolean isEmpty() {
-		return currentTiles.size() == 0;
+		return (getNumberOfTiles() == 0);
 	}
+
+	public boolean isEmptyCell(int y, int x) {
+		return currentTiles2D[y][x] == -1;
+	}
+
+	public int getTileAt(int y, int x) {
+		return currentTiles2D[y][x];
+	}
+
+	public void removeTileAt(int y, int x) {
+
+	}
+
 }

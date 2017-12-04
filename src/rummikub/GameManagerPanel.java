@@ -15,17 +15,12 @@ public class GameManagerPanel extends JPanel {
 	Player player;
 	AI ai;
 
-	// rack->board 넘겨줄 index
-	private static int messenger;
-
 	JButton btnEndTurn;
 	JButton btnResetBoard;
 
 	JLabel profile;
 	JLabel space;
 	JPanel buttonPanel;
-
-	private static boolean isAdding;
 
 	public GameManagerPanel(Board board, Player player, AI ai) {
 		this.board = board;
@@ -41,7 +36,12 @@ public class GameManagerPanel extends JPanel {
 
 		ActionEventHandler handler = new ActionEventHandler();
 		btnEndTurn.addActionListener(handler);
+		ImageIcon imgEndTurn = new ImageIcon("./pic\\endTurn.png");
+		btnEndTurn.setIcon(imgEndTurn);
 		btnResetBoard.addActionListener(handler);
+		ImageIcon imgResetBoard = new ImageIcon("./pic\\resetBoard.png");
+		btnResetBoard.setIcon(imgResetBoard);
+
 		profile = new JLabel("Profile goes here.");
 		space = new JLabel("space");
 		space.setBackground(Color.RED);
@@ -54,26 +54,6 @@ public class GameManagerPanel extends JPanel {
 		add(space, BorderLayout.CENTER);
 		add(buttonPanel, BorderLayout.SOUTH);
 
-		isAdding = false;
-
-	}
-
-	public static void setAdding(boolean flag) {
-		isAdding = flag;
-	}
-
-	public static boolean isAdding() {
-		return isAdding;
-	}
-
-	public void setMessenger(int id) {
-		this.messenger = id;
-
-	}
-
-	public static int getMessenger() {
-
-		return messenger;
 	}
 
 	private class ActionEventHandler implements ActionListener {
@@ -83,7 +63,7 @@ public class GameManagerPanel extends JPanel {
 			if (e.getSource() == btnEndTurn) {
 				if (true) { // TODO 게임이 끝났는지 판별 - 만약 computer 쪽에서 끝나면???
 					if (board.check()) {
-						if(player.getRack().isEmpty())
+						if (player.getRack().isEmpty())
 							Rummikub.gameWin("rack is empty!");
 						if (!player.hasRegistered()) {
 							player.drawFourTiles();

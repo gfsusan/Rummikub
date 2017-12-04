@@ -55,8 +55,19 @@ public class Board extends JPanel {
 		return currentTiles;
 	}
 
-	public int getCurrentTile(int i, int j) {
-		return currentTiles[i][j];
+	public int getTileAt(int y, int x) {
+		System.out.println("getTileAt value: " + currentTiles[y][x]);
+		return currentTiles[y][x];
+	}
+
+	public void removeTileAt(int y, int x) {
+		currentTiles[y][x] = -1;
+		repaint();
+	}
+
+	public void addTileAt(int y, int x) {
+		currentTiles[y][x] = Rummikub.getWhichTile();
+		repaint();
 	}
 
 	public Board getBoard() {
@@ -81,13 +92,9 @@ public class Board extends JPanel {
 		repaint();
 	}
 
-	public boolean isEmptyCell(int i, int j) {
-		return (currentTiles[i][j] == -1);
-	}
-
-	public void addTile(int i, int j) {
-		currentTiles[i][j] = GameManagerPanel.getMessenger();
-
+	public boolean isEmptyCell(int y, int x) {
+		System.out.println("This is an empty cell (" + y + ", " + x + ")");
+		return (currentTiles[y][x] == -1);
 	}
 
 	////////////////////////////////////////
@@ -166,9 +173,10 @@ public class Board extends JPanel {
 
 		if (imgBoard == null) {
 			imgBoard = createImage(WIDTH * 45, HEIGHT * 60);
-			/*boardGraphics = imgBoard.getGraphics();
-			boardGraphics.setColor(new Color(250, 218, 94));
-			boardGraphics.fillRect(0, 0, getWidth(), getHeight());*/
+			/*
+			 * boardGraphics = imgBoard.getGraphics(); boardGraphics.setColor(new Color(250,
+			 * 218, 94)); boardGraphics.fillRect(0, 0, getWidth(), getHeight());
+			 */
 			String pathSep = System.getProperty("file.separator");
 			if (pathSep.equals("\\")) {
 				pathSep = "\\\\";
@@ -182,7 +190,7 @@ public class Board extends JPanel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 
 		for (int i = 0; i < HEIGHT; i++) {
@@ -191,6 +199,7 @@ public class Board extends JPanel {
 			}
 		}
 		g.drawImage(imgBoard, 0, 0, this);
+		System.out.println("Board - paint method called!");
 
 	}
 }

@@ -4,9 +4,10 @@ package rummikub;
  * represents the human player
  */
 public class Player {
-	private Rack rack;
+	protected Rack rack;
 	// tileTaken¿∫ « ø‰ X
-	private boolean isTurn, tilePlaced;
+	protected boolean isTurn, tilePlaced;
+
 
 	public Player(Rack playerRack) {
 		this.rack = playerRack;
@@ -43,5 +44,5 @@ public class Player {
 	public void drawFourTiles() {
 		rack.drawFourTiles();
 	}
-	
+
 }

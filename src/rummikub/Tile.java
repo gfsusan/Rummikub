@@ -61,11 +61,11 @@ public class Tile {
 		if (0 <= tileID && tileID <= 25) {
 			return "red";
 		} else if (26 <= tileID && tileID <= 51) {
-			return "orange";
+			return "yellow";
 		} else if (52 <= tileID && tileID <= 77) {
 			return "blue";
 		} else if (78 <= tileID && tileID <= 103) {
-			return "black";
+			return "green";
 		} else if (tileID == 104 || tileID == 105) {
 			return "joker";
 		} else if (tileID == -1) {
