@@ -79,7 +79,7 @@ public class Rack extends JPanel {
 		return this;
 	}
 
-	private int getCurrentSize() {
+	protected int getCurrentSize() {
 		int counter = 0;
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < WIDTH; j++) {
@@ -90,7 +90,7 @@ public class Rack extends JPanel {
 		return counter;
 	}
 
-	private int getPreviousSize() {
+	protected int getPreviousSize() {
 		int counter = 0;
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < WIDTH; j++) {
@@ -105,7 +105,7 @@ public class Rack extends JPanel {
 		return currentTiles[y][x];
 	}
 
-	private ArrayList<Integer> maketo1D() {
+	protected ArrayList<Integer> make2Dto1D() {
 		ArrayList<Integer> arrayList = new ArrayList<Integer>();
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < WIDTH; j++) {
@@ -116,7 +116,7 @@ public class Rack extends JPanel {
 		return arrayList;
 	}
 
-	private void make1Dto(ArrayList<Integer> arrayList) {
+	protected void make1Dto2D(ArrayList<Integer> arrayList) {
 		for (int i = 0; i < HEIGHT; i++)
 			for (int j = 0; j < WIDTH; j++)
 				currentTiles[i][j] = -1;
@@ -158,7 +158,7 @@ public class Rack extends JPanel {
 	}
 
 	// method that finds the first blank tile in currentTiles
-	private int firstBlankIndex() {
+	protected int firstBlankIndex() {
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < WIDTH; j++) {
 				if (currentTiles[i][j] == -1)
@@ -191,7 +191,7 @@ public class Rack extends JPanel {
 	//////////////////////////////
 
 	public void sortByNumber() {
-		ArrayList<Integer> temp = maketo1D();
+		ArrayList<Integer> temp = make2Dto1D();
 		for (int i = temp.size() - 1; i >= 0; i--) {
 			for (int j = 0; j < i; j++) {
 				if (temp.get(j) % 26 > temp.get(j + 1) % 26) {
@@ -200,14 +200,14 @@ public class Rack extends JPanel {
 				}
 			}
 		}
-		make1Dto(temp);
+		make1Dto2D(temp);
 		repaint();
 	}
 
 	public void sortByColor() {
-		ArrayList<Integer> temp = maketo1D();
+		ArrayList<Integer> temp = make2Dto1D();
 		Collections.sort(temp);
-		make1Dto(temp);
+		make1Dto2D(temp);
 		repaint();
 	}
 
