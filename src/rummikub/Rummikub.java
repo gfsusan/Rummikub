@@ -3,11 +3,15 @@ package rummikub;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Rummikub extends JFrame {
@@ -61,6 +65,7 @@ public class Rummikub extends JFrame {
 		///////////////////////////////////////////////////////
 
 		// setSize(1000, 710);
+
 		setResizable(false);
 
 		back = new JPanel();
@@ -69,7 +74,7 @@ public class Rummikub extends JFrame {
 		top = new JPanel();
 		top.setLayout(new BorderLayout());
 		top.setBackground(Color.CYAN);
-		// top.setPreferredSize(new Dimension(900, 600));
+		top.setPreferredSize(new Dimension(900, 510));
 
 		bottom = new JPanel();
 		bottom.setLayout(new BorderLayout());
@@ -79,17 +84,15 @@ public class Rummikub extends JFrame {
 		topRight = new JPanel();
 		topRight.setLayout(new BorderLayout());
 		topRight.setBackground(Color.BLACK);
-		// topRight.setPreferredSize(new Dimension(300, 600));
+		topRight.setPreferredSize(new Dimension(200, 400));
 
 		// manager
 		gmPanel = new GameManagerPanel(board, player, ai);
 		gmPanel.setBackground(Color.ORANGE);
 		// TODO profile GUI
 
-		space = new JPanel();
-		space.setPreferredSize(new Dimension(0, 30));
-
-		// TODO add the Profile GUI
+		space = new SpacePanel();
+		space.setPreferredSize(new Dimension(0, 20));
 
 		sortPanel = new JPanel();
 		sortPanel.setLayout(new GridLayout(2, 1));
@@ -139,6 +142,11 @@ public class Rummikub extends JFrame {
 		System.exit(-1);
 	}
 
+	public static void gameWin(String message) {
+		System.out.println("You Won ! - " + message);
+	}
+
+	
 	class ActionEventHandler implements ActionListener {
 
 		@Override

@@ -76,7 +76,10 @@ public class Rack extends JPanel {
 
 	public void drawFourTiles() {
 		for (int i = 0; i < DRAW_NUM; i++) {
-			currentTiles.add(Deck.takeTileFromDeck());
+			if (!isFull())
+				currentTiles.add(Deck.takeTileFromDeck());
+			else
+				Rummikub.gameOver("Player rack is full!");
 		}
 		saveCurrentRack();
 		repaint();
@@ -127,7 +130,7 @@ public class Rack extends JPanel {
 		if (imgRack == null) {
 			imgRack = createImage(WIDTH * 45, HEIGHT * 60);
 			tilesGraphics = imgRack.getGraphics();
-			tilesGraphics.setColor(new Color(0, 156, 0));
+			tilesGraphics.setColor(new Color(56, 87, 35)); 
 			tilesGraphics.fillRect(0, 0, getWidth(), getHeight());
 		}
 
@@ -142,5 +145,13 @@ public class Rack extends JPanel {
 
 	public Rack getRack() {
 		return this;
+	}
+
+	private boolean isFull() {
+		return currentTiles.size() >= 48;
+	}
+
+	public boolean isEmpty() {
+		return currentTiles.size() == 0;
 	}
 }

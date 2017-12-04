@@ -5,8 +5,11 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -66,11 +69,19 @@ public class Board extends JPanel {
 				currentTiles[i][j] = previousTiles[i][j];
 			}
 		}
-		//TODO reset 할 때 왜 오른쪽 위에 tile이 생기지???
+
+		System.out.println("Board - paint method called!");
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++)
+				System.out.print(currentTiles[i][j] + " ");
+			System.out.print("\n");
+
+		}
+		// TODO reset 할 때 왜 오른쪽 위에 tile이 생기지???
 		repaint();
 	}
 
-	public boolean isEmpty(int i, int j) {
+	public boolean isEmptyCell(int i, int j) {
 		return (currentTiles[i][j] == -1);
 	}
 
@@ -107,27 +118,22 @@ public class Board extends JPanel {
 					}
 				}
 			}
-		}		
-		
-		/* TODO 가로줄마다 initialize 하면, 한줄에 2개의 tileSet이 있으면 ??
-		for (int i = 0; i < HEIGHT; i++) { // 가로 (i줄)
-		
-			ArrayList<Integer> tempSet = new ArrayList<Integer>();
-			for (int j = 0; j < WIDTH; j++) { // i줄 j칸
-				if (currentTiles[i][j] == -1) { // blank tile
-					if (!tempSet.isEmpty()) {
-						setList.add(new TileSet(tempSet)); // tempSet 완성-> setList에 추가
-						tempSet = new ArrayList<Integer>(); // tempSet 초기화
-					}
-				} else
-					tempSet.add(currentTiles[i][j]); // tempSet에 (i,j) tileID 저장
-			}
 		}
-		*/
+
+		/*
+		 * TODO 가로줄마다 initialize 하면, 한줄에 2개의 tileSet이 있으면 ?? for (int i = 0; i < HEIGHT;
+		 * i++) { // 가로 (i줄)
+		 * 
+		 * ArrayList<Integer> tempSet = new ArrayList<Integer>(); for (int j = 0; j <
+		 * WIDTH; j++) { // i줄 j칸 if (currentTiles[i][j] == -1) { // blank tile if
+		 * (!tempSet.isEmpty()) { setList.add(new TileSet(tempSet)); // tempSet 완성->
+		 * setList에 추가 tempSet = new ArrayList<Integer>(); // tempSet 초기화 } } else
+		 * tempSet.add(currentTiles[i][j]); // tempSet에 (i,j) tileID 저장 } }
+		 */
 	}
 
 	// check if Board has validSets
-	public boolean checkBoard() {
+	public boolean check() {
 		updateTileSets();
 		for (int i = 0; i < setList.size(); i++) {
 			if (!setList.get(i).isValidSet())
@@ -160,9 +166,23 @@ public class Board extends JPanel {
 
 		if (imgBoard == null) {
 			imgBoard = createImage(WIDTH * 45, HEIGHT * 60);
-			boardGraphics = imgBoard.getGraphics();
+			/*boardGraphics = imgBoard.getGraphics();
 			boardGraphics.setColor(new Color(250, 218, 94));
-			boardGraphics.fillRect(0, 0, getWidth(), getHeight());
+			boardGraphics.fillRect(0, 0, getWidth(), getHeight());*/
+			String pathSep = System.getProperty("file.separator");
+			if (pathSep.equals("\\")) {
+				pathSep = "\\\\";
+			}
+
+			String imagePath = "./" + "pic" + pathSep + "board" + ".png";
+			System.out.println(imagePath);
+			try {
+				imgBoard = ImageIO.read(new File(imagePath));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 
 		for (int i = 0; i < HEIGHT; i++) {
@@ -172,6 +192,5 @@ public class Board extends JPanel {
 		}
 		g.drawImage(imgBoard, 0, 0, this);
 
-		System.out.println("Board - paint method called!");
 	}
 }

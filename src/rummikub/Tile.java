@@ -17,7 +17,6 @@ public class Tile {
 
 	private int tileID; // tile priority
 	private int tileNum; // number written in tile
-	private boolean isUsed; // true == on the board, false == in the deck
 
 	private BufferedImage img;
 	private Image tileImage;
@@ -30,14 +29,13 @@ public class Tile {
 	public Tile() throws IOException {
 		tileNum = -1;
 		tileID = -1;
-		isUsed = true;
 
 		String pathSep = System.getProperty("file.separator");
 		if (pathSep.equals("\\")) {
 			pathSep = "\\\\";
 		}
 
-		String imagePath = "./" + "pic" + pathSep + this.getColor() + ".gif";
+		String imagePath = "./" + "pic" + pathSep + this.getColor() + ".png";
 		System.out.println(imagePath);
 		img = ImageIO.read(new File(imagePath));
 	}
@@ -46,14 +44,13 @@ public class Tile {
 	public Tile(int id, int num) throws IOException {
 		tileNum = num;
 		tileID = id;
-		isUsed = false;
 
 		String pathSep = System.getProperty("file.separator");
 		if (pathSep.equals("\\")) {
 			pathSep = "\\\\";
 		}
 
-		String imagePath = "./" + "pic" + pathSep + this.getColor() + tileNum + ".gif";
+		String imagePath = "./" + "pic" + pathSep + this.getColor() + tileNum + ".png";
 		System.out.println(imagePath);
 		img = ImageIO.read(new File(imagePath));
 	}
@@ -82,16 +79,6 @@ public class Tile {
 	// return tileID
 	public int getTileID() {
 		return tileID;
-	}
-
-	// return isUsed;
-	public boolean getIsUsed() {
-		return isUsed;
-	}
-
-	// set isUsed to true(on the board)
-	public void setIsUsed() {
-		isUsed = true;
 	}
 
 	// return Image
