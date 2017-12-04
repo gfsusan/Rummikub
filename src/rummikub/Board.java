@@ -138,7 +138,11 @@ public class Board extends JPanel {
 				}
 			}
 		}
-
+		
+		for(TileSet tileSet: setList) {
+			tileSet.print();
+		}
+		
 	}
 
 	// check if Board has validSets

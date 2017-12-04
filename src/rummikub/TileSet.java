@@ -56,6 +56,8 @@ public class TileSet {
 			for (int i = 0; i < 4; i++) { // colorÀÇ true °³¼ö
 				if (colorCount[i] == 2)
 					return false;
+				else if (colorCount[i] == 1)
+					colorNum++;
 			}
 			return (colorNum == set.size() - jkCounter);
 
@@ -98,5 +100,11 @@ public class TileSet {
 
 	public ArrayList<Integer> getTileSet() {
 		return this.set;
+	}
+
+	public void print() {
+		for (int i = 0; i < set.size(); i++)
+			System.out.print(set.get(i) + " ");
+		System.out.print("\n");
 	}
 }
