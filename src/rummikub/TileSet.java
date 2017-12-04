@@ -94,6 +94,15 @@ public class TileSet {
 
 	}
 
+	public int getSum() {
+		int total = 0;
+		for (Integer num : set) {
+			if (num < 104)
+				total += Deck.getTile(num).getTileNum();
+		}
+		return total;
+	}
+
 	public int getSize() {
 		return set.size();
 	}

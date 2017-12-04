@@ -23,6 +23,7 @@ public class GameManagerPanel extends JPanel {
 	private JPanel buttonPanel;
 
 	private int turn;
+	private static boolean firstReg;
 
 	public GameManagerPanel(Board board, Player player, AI ai) {
 		this.board = board;
@@ -31,26 +32,33 @@ public class GameManagerPanel extends JPanel {
 
 		// initialize # of turn
 		turn = 0;
+		firstReg=false;
 
 		// TODO
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(200, 100));
 
+		// EndTurn, ResetBoard 버튼 생성
 		btnEndTurn = new JButton("End Turn");
 		btnResetBoard = new JButton("Reset Board");
 
+		// ActionEventHandler 생성 및 추가
 		ActionEventHandler handler = new ActionEventHandler();
 		btnEndTurn.addActionListener(handler);
+		
+		// 이미지 설정
 		ImageIcon imgEndTurn = new ImageIcon("./pic\\endTurn.png");
 		btnEndTurn.setIcon(imgEndTurn);
 		btnResetBoard.addActionListener(handler);
 		ImageIcon imgResetBoard = new ImageIcon("./pic\\resetBoard.png");
 		btnResetBoard.setIcon(imgResetBoard);
 
+		// 프로필, 공간 레이블 생성
 		profile = new JLabel("Profile goes here.");
 		space = new JLabel("space");
 		space.setBackground(Color.RED);
 
+		// 각 컴포넌트 배치
 		buttonPanel = new JPanel(new GridLayout(2, 1));
 		buttonPanel.add(btnEndTurn);
 		buttonPanel.add(btnResetBoard);
@@ -61,6 +69,13 @@ public class GameManagerPanel extends JPanel {
 
 	}
 
+	public static boolean hasFirstReg() {
+		return firstReg;
+	}
+	
+	public static void setFirstReg() {
+		firstReg=true;
+	}
 	private class ActionEventHandler implements ActionListener {
 
 		@Override
@@ -84,6 +99,7 @@ public class GameManagerPanel extends JPanel {
 					ai.takeTurn();
 
 					// check # of turns
+					System.out.println(turn);
 					if (turn++ > 15)
 						Rummikub.gameOver("Game Over"); // TODO game end
 				} else {

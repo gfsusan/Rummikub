@@ -138,17 +138,24 @@ public class Board extends JPanel {
 				}
 			}
 		}
-		
-		for(TileSet tileSet: setList) {
+
+		for (TileSet tileSet : setList) {
 			tileSet.print();
 		}
-		
+
 	}
 
 	// check if Board has validSets
 	public boolean check() {
 		updateTileSets();
 		for (int i = 0; i < setList.size(); i++) {
+			if (!GameManagerPanel.hasFirstReg()) {
+				// check if first registration set sum is 30+
+				if (setList.get(i).getSum() >= 30)
+					GameManagerPanel.setFirstReg();
+				else
+					return false;
+			}
 			if (!setList.get(i).isValidSet())
 				return false;
 		}
