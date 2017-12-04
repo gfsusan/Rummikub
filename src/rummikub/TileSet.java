@@ -22,7 +22,7 @@ public class TileSet {
 	}
 
 	// tile이 모두 같은 수이고 색이 겹치지는 않는 지 check
-	private boolean isAllSameNum() {
+	public boolean isAllSameNum() {
 		int num = -1; // repeated value
 		int jkCounter = 0; // joker 개수
 		int colorNum = 0; // colorCount가 1인 count 개수

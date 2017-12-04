@@ -194,7 +194,7 @@ public class Rack extends JPanel {
 		ArrayList<Integer> temp = make2Dto1D();
 		for (int i = temp.size() - 1; i >= 0; i--) {
 			for (int j = 0; j < i; j++) {
-				if (temp.get(j) % 26 > temp.get(j + 1) % 26) {
+				if ((temp.get(j)/2) % 13 > (temp.get(j + 1)/2) % 13) {
 					temp.add(j, temp.get(j + 1));
 					temp.remove(j + 2);
 				}
@@ -245,6 +245,15 @@ public class Rack extends JPanel {
 		g.drawImage(imgRack, 0, 0, this);
 		imgRack = null;
 		System.out.println("Rack - paint method called!");
+	}
+
+	public void print() {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++)
+				System.out.print(currentTiles[i][j] + " ");
+			System.out.print("\n");
+		}
 	}
 
 }

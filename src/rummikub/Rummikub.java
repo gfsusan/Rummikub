@@ -62,7 +62,7 @@ public class Rummikub extends JFrame {
 
 		// player와 AI를 생성
 		player = new Player(playerRackPanel);
-		ai = new AI(aiRack);
+		ai = new AI(board, aiRack);
 
 		///////////////////////////////////////////////////////
 		// GUI
@@ -99,6 +99,7 @@ public class Rummikub extends JFrame {
 		sortPanel = new JPanel();
 		sortPanel.setLayout(new GridLayout(2, 1));
 		sortPanel.setPreferredSize(new Dimension(110, 120));
+		
 		btnSort1 = new JButton("Sort by Number");
 		ImageIcon imgSort1 = new ImageIcon("./pic\\number.png");
 		btnSort1.setIcon(imgSort1);

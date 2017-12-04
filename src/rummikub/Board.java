@@ -70,6 +70,45 @@ public class Board extends JPanel {
 		repaint();
 	}
 
+	public void addTileSet(TileSet set) {
+		int index = getBlankTilesIndex(set.getSize());
+		
+		for (int i = 0; i < set.getSize(); i++)
+			currentTiles[(index + i) / WIDTH][(index + i) % WIDTH] = set.getTileSet().get(i);
+	}
+
+	public int getBlankTilesIndex(int size) {
+		boolean inGroup;
+		int count = 0;
+		int a = 0, b = 0;
+		for (int i = 0; i < HEIGHT; i++) {
+			inGroup = false;
+			for (int j = 0; j < WIDTH; j++) {
+				if (currentTiles[i][j] == -1) {
+					if (inGroup) {
+						a = i;
+						b = j;
+						inGroup = false;
+						if (count > size + 1)
+							return a * WIDTH + b;// numGroups++;
+					}
+				} else {
+					if (inGroup) {
+						// add to group
+						count++;
+					} else {
+						inGroup = true;
+						count = 0;
+						// initialize new group
+						count++;
+					}
+				}
+			}
+		}
+		return -1; // no space for 'size'
+
+	}
+
 	public ArrayList<TileSet> getSet() {
 		return setList;
 	}
@@ -92,14 +131,11 @@ public class Board extends JPanel {
 				currentTiles[i][j] = previousTiles[i][j];
 			}
 		}
-
-		System.out.println("Board - paint method called!");
-		for (int i = 0; i < HEIGHT; i++) {
-			for (int j = 0; j < WIDTH; j++)
-				System.out.print(currentTiles[i][j] + " ");
-			System.out.print("\n");
-
-		}
+		/*
+		 * System.out.println("Board - paint method called!"); for (int i = 0; i <
+		 * HEIGHT; i++) { for (int j = 0; j < WIDTH; j++)
+		 * System.out.print(currentTiles[i][j] + " "); System.out.print("\n"); }
+		 */
 		// TODO reset 할 때 왜 오른쪽 위에 tile이 생기지???
 		repaint();
 	}
@@ -137,10 +173,6 @@ public class Board extends JPanel {
 					}
 				}
 			}
-		}
-
-		for (TileSet tileSet : setList) {
-			tileSet.print();
 		}
 
 	}
@@ -187,7 +219,7 @@ public class Board extends JPanel {
 		if (imgBoard == null) {
 			imgBoard = createImage(WIDTH * 45, HEIGHT * 60);
 			String imagePath = "./pic\\board.png";
-			System.out.println(imagePath);
+			// System.out.println(imagePath);
 			try {
 				imgBoard = ImageIO.read(new File(imagePath));
 			} catch (IOException e) {
