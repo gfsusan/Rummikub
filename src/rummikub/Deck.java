@@ -66,7 +66,7 @@ public class Deck {
 			remains.remove(random);
 			return rID;
 		} else {
-			Rummikub.gameOver("No card in Deck!");
+			
 			return -1;
 		}
 	}

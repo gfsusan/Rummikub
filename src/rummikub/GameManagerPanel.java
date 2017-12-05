@@ -95,7 +95,7 @@ public class GameManagerPanel extends JPanel {
 					board.repaint();
 					// check # of turns
 					System.out.println("turn: " + turn);
-					if (turn++ > 15)
+					if (turn++ > 15||Deck.isEmpty())
 						if (player.getRack().getCurrentSize() > ai.getRack().getCurrentSize())
 							Rummikub.gameWin("You had less tiles than ai");
 						else if (player.getRack().getCurrentSize() < ai.getRack().getCurrentSize())

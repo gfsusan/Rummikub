@@ -158,6 +158,8 @@ public class Rummikub extends JFrame {
 		System.exit(-1);
 	}
 
+
+
 	public static void setWhichTile(int id) {
 		whichTile = id;
 	}
@@ -198,4 +200,5 @@ public class Rummikub extends JFrame {
 
 	}
 
+	
 }
