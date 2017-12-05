@@ -73,9 +73,10 @@ public class GameManagerPanel extends JPanel {
 		return firstReg;
 	}
 	
-	public static void setFirstReg() {
-		firstReg=true;
+	public static void setFirstReg(boolean flag) {
+		firstReg=flag;
 	}
+	
 	private class ActionEventHandler implements ActionListener {
 
 		@Override
@@ -90,14 +91,16 @@ public class GameManagerPanel extends JPanel {
 					else if (!player.hasRegistered()) {
 						player.drawFourTiles();
 					}
-
-					// initialize rack and board
+					// initialize rack
 					player.getRack().saveCurrentRack();
-					board.saveCurrentTiles();
+					// player turn end
 
 					// ai's turn
 					ai.takeTurn();
-
+					
+					// initialize board
+					board.saveCurrentTiles();
+					
 					// check # of turns
 					System.out.println(turn);
 					if (turn++ > 15)

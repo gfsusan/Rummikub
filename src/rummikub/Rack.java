@@ -194,7 +194,7 @@ public class Rack extends JPanel {
 		ArrayList<Integer> temp = make2Dto1D();
 		for (int i = temp.size() - 1; i >= 0; i--) {
 			for (int j = 0; j < i; j++) {
-				if ((temp.get(j)/2) % 13 > (temp.get(j + 1)/2) % 13) {
+				if ((temp.get(j) / 2) % 13 > (temp.get(j + 1) / 2) % 13) {
 					temp.add(j, temp.get(j + 1));
 					temp.remove(j + 2);
 				}

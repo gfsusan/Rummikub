@@ -13,22 +13,11 @@ public class SpacePanel extends JPanel {
 	public void paint(Graphics g) {
 		Image imgBoard = null;
 		if (imgBoard == null) {
-			//imgBoard = createImage(WIDTH * 45, HEIGHT * 60);
-			/*
-			 * boardGraphics = imgBoard.getGraphics(); boardGraphics.setColor(new Color(250,
-			 * 218, 94)); boardGraphics.fillRect(0, 0, getWidth(), getHeight());
-			 */
-			String pathSep = System.getProperty("file.separator");
-			if (pathSep.equals("\\")) {
-				pathSep = "\\\\";
-			}
+			String imagePath = "./pic\\space.png";
 
-			String imagePath = "./" + "pic" + pathSep + "space" + ".png";
-			System.out.println(imagePath);
 			try {
 				imgBoard = ImageIO.read(new File(imagePath));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -38,5 +27,4 @@ public class SpacePanel extends JPanel {
 
 	}
 
-	// TODO add the Profile GUI
 }

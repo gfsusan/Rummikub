@@ -72,7 +72,7 @@ public class Board extends JPanel {
 
 	public void addTileSet(TileSet set) {
 		int index = getBlankTilesIndex(set.getSize());
-		
+
 		for (int i = 0; i < set.getSize(); i++)
 			currentTiles[(index + i) / WIDTH][(index + i) % WIDTH] = set.getTileSet().get(i);
 	}
@@ -131,11 +131,14 @@ public class Board extends JPanel {
 				currentTiles[i][j] = previousTiles[i][j];
 			}
 		}
-		/*
-		 * System.out.println("Board - paint method called!"); for (int i = 0; i <
-		 * HEIGHT; i++) { for (int j = 0; j < WIDTH; j++)
-		 * System.out.print(currentTiles[i][j] + " "); System.out.print("\n"); }
-		 */
+
+		System.out.println("Board - paint method called!");
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++)
+				System.out.print(currentTiles[i][j] + " ");
+			System.out.print("\n");
+		}
+
 		// TODO reset 할 때 왜 오른쪽 위에 tile이 생기지???
 		repaint();
 	}
@@ -184,15 +187,17 @@ public class Board extends JPanel {
 			if (!GameManagerPanel.hasFirstReg()) {
 				// check if first registration set sum is 30+
 				if (setList.get(i).getSum() >= 30)
-					GameManagerPanel.setFirstReg();
-				else
-					return false;
+					GameManagerPanel.setFirstReg(true);
 			}
-			if (!setList.get(i).isValidSet())
+			if (!setList.get(i).isValidSet()) {
+				GameManagerPanel.setFirstReg(false);
 				return false;
-		}
+			}
 
-		return true;
+		}
+		// 여기까지 왔으면 모든게 valid set이고, firstReg 충족
+		// first register가 되었거나, 
+		return GameManagerPanel.hasFirstReg()||setList.isEmpty();
 
 	}
 
