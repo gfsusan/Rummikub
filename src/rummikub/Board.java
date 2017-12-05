@@ -151,6 +151,22 @@ public class Board extends JPanel {
 		repaint();
 	}
 
+	public int getTileSetLocation(TileSet tileSet) {
+		boolean flag = true;
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				for (int k = 0; k < tileSet.getSize(); k++) {
+					if (currentTiles[i][j + k] != tileSet.getTileAt(k))
+						flag = false;
+				}
+				if (flag = true) {
+					return i * WIDTH + j;
+				}
+			}
+		}
+		return -1;
+	}
+
 	////////////////////////////////////
 	// add
 	///////////////////////////////////
@@ -158,6 +174,12 @@ public class Board extends JPanel {
 	public void addTileAt(int y, int x) {
 		currentTiles[y][x] = Rummikub.getWhichTile();
 		repaint();
+	}
+
+	public void addTileIfSpaciousLeft(int index, int y, int x) {
+		if (x > 0)
+			if (isEmptyCell(y, x - 1))
+				currentTiles[y][x] = index;
 	}
 
 	public static void addTileSet(TileSet set) {

@@ -57,7 +57,6 @@ public class AI extends Player {
 			rack.reset();
 			drawFourTiles();
 		}
-		
 
 		// save board after ai's turn
 		board.saveCurrentTiles();
@@ -110,28 +109,22 @@ public class AI extends Player {
 
 	private void addToExistingSet() {
 		setList = Board.getSet();
-
-	}
-
-	private boolean isEnrolled(ArrayList<Integer> tempArr) {
-		// 등록했는지 안했는지 알려주는 함수
-		int sum = 0;
-		if (enrollment) {// 등록했다
-			board.addTileSet(new TileSet(tempArr));
-			board.repaint();
-			return true;// 타일에 넣어줬다.
-		} else {// 등록안했으면
-			for (int i = 0; i < tempArr.size() - 1; i++) {
-				sum += tempArr.get(i);
+		for (int i = 0; i < Rack.HEIGHT; i++) {
+			for (int j = 0; j < Rack.WIDTH - 2; j++) {
+				if (rack.currentTiles[i][j] != -1) {
+					for (TileSet tileSet : setList) {
+						TileSet temp = new TileSet(tileSet.getTileSet());
+						tileSet.addFront(rack.currentTiles[i][j]);
+						if (tileSet.isValidSet()) {
+							int location = board.getTileSetLocation(temp);// add tile
+							board.addTileIfSpaciousLeft(rack.currentTiles[i][j], location / Board.WIDTH,
+									location % Board.WIDTH);
+							rack.removeTileAt(i, j);
+						}
+					}
+				}
 			}
-			if (sum >= 30) {
-				board.addTileSet(new TileSet(tempArr));
-				board.repaint();
-				enrollment = true;
-				return true;
-			} else
-				return false;
-		}
 
+		}
 	}
 }

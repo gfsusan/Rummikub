@@ -18,6 +18,10 @@ public class TileSet {
 		this.set.add(index);
 	}
 
+	public void addFront(int index) {
+		this.set.add(0, index);
+	}
+
 	// 이 함수 부르기 전에 처음 "등록"했는지 체크하고 이 함수 부르기
 	public boolean isValidSet() {
 		if (this.getSize() >= 3) { // 3개 이상
@@ -113,6 +117,10 @@ public class TileSet {
 
 	public int getSize() {
 		return set.size();
+	}
+	
+	public int getTileAt(int index) {
+		return set.get(index);
 	}
 
 	public ArrayList<Integer> getTileSet() {
