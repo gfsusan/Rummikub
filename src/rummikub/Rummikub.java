@@ -99,7 +99,7 @@ public class Rummikub extends JFrame {
 		sortPanel = new JPanel();
 		sortPanel.setLayout(new GridLayout(2, 1));
 		sortPanel.setPreferredSize(new Dimension(110, 120));
-		
+
 		btnSort1 = new JButton("Sort by Number");
 		ImageIcon imgSort1 = new ImageIcon("./pic\\number.png");
 		btnSort1.setIcon(imgSort1);
@@ -144,14 +144,18 @@ public class Rummikub extends JFrame {
 	}
 
 	public static void gameOver(String message) {
-		// TODO
 		System.out.println("Game Over - " + message);
-
 		System.exit(-1);
 	}
 
 	public static void gameWin(String message) {
 		System.out.println("You Won ! - " + message);
+		System.exit(-1);
+	}
+
+	public static void gameTie(String message) {
+		System.out.println("You Won ! - " + message);
+		System.exit(-1);
 	}
 
 	public static void setWhichTile(int id) {
@@ -175,11 +179,11 @@ public class Rummikub extends JFrame {
 
 		return isTileAdding;
 	}
-	
+
 	public static boolean isTileFromBoard() {
 		return isTileFromBoard;
 	}
-	
+
 	class ActionEventHandler implements ActionListener {
 
 		@Override
@@ -193,6 +197,5 @@ public class Rummikub extends JFrame {
 		}
 
 	}
-
 
 }

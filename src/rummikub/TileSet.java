@@ -6,8 +6,16 @@ public class TileSet {
 
 	private ArrayList<Integer> set = new ArrayList<Integer>();
 
+	public TileSet() {
+		this.set = new ArrayList<Integer>();
+	}
+
 	public TileSet(ArrayList<Integer> rset) {
 		this.set = rset;
+	}
+
+	public void add(int index) {
+		this.set.add(index);
 	}
 
 	// 이 함수 부르기 전에 처음 "등록"했는지 체크하고 이 함수 부르기

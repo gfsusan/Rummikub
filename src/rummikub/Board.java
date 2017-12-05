@@ -19,16 +19,13 @@ public class Board extends JPanel {
 	private Image imgBoard;
 	private Graphics boardGraphics;
 
-	// number of TileSets
-	private int nTileSets = 0;
-
 	public static final int WIDTH = 22;
 	public static final int HEIGHT = 8;
 
 	private static int[][] currentTiles = new int[HEIGHT][WIDTH];
 	private static int[][] previousTiles = new int[HEIGHT][WIDTH];
 
-	private ArrayList<TileSet> setList;
+	private static ArrayList<TileSet> setList;
 
 	public Board() {
 		super();
@@ -51,6 +48,10 @@ public class Board extends JPanel {
 		saveCurrentTiles();
 	}
 
+	/////////////////////////////////
+	// get
+	/////////////////////////////////
+
 	public int[][] getCurrentTiles() {
 		return currentTiles;
 	}
@@ -60,26 +61,10 @@ public class Board extends JPanel {
 		return currentTiles[y][x];
 	}
 
-	public void removeTileAt(int y, int x) {
-		currentTiles[y][x] = -1;
-		repaint();
-	}
+	public static int getBlankTilesIndex(int size) {
 
-	public void addTileAt(int y, int x) {
-		currentTiles[y][x] = Rummikub.getWhichTile();
-		repaint();
-	}
-
-	public void addTileSet(TileSet set) {
-		int index = getBlankTilesIndex(set.getSize());
-
-		for (int i = 0; i < set.getSize(); i++)
-			currentTiles[(index + i) / WIDTH][(index + i) % WIDTH] = set.getTileSet().get(i);
-	}
-
-	public int getBlankTilesIndex(int size) {
 		boolean inGroup;
-		int a=0,b=0;
+		int a = 0, b = 0;
 		int count = 0;
 		for (int i = 0; i < HEIGHT; i++) {
 			inGroup = false;
@@ -87,22 +72,26 @@ public class Board extends JPanel {
 				if (currentTiles[i][j] != -1) {
 					if (inGroup) {
 						inGroup = false;
-						if (count >= size)
-							return a * WIDTH + b;// numGroups++;
 					}
 				} else {
 					if (inGroup) {
 						// add to group
 						count++;
-						if (count >= size)
+						if (count >= size) {
+							System.out.println("2");
 							return a * WIDTH + b;
+						}
 					} else {
 						inGroup = true;
-						a=i;b=j;
+						a = i;
+						b = j;
+						count = 0;
 						// initialize new group
 						count++;
-						if (count >= size)
+						if (count >= size) {
+							System.out.println("3");
 							return a * WIDTH + b;
+						}
 					}
 				}
 			}
@@ -111,13 +100,82 @@ public class Board extends JPanel {
 
 	}
 
-	public ArrayList<TileSet> getSet() {
+	private int getCurrentTilesSum() {
+		int total = 0;
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				int temp = Deck.getTile(currentTiles[i][j]).getTileNum();
+				if (temp != -1 && temp < 104)
+					total += temp;
+			}
+		}
+		return total;
+	}
+
+	private int getPreviousTilesSum() {
+		int total = 0;
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				int temp = Deck.getTile(previousTiles[i][j]).getTileNum();
+				if (temp != -1 && temp < 104)
+					total += temp;
+			}
+		}
+		return total;
+	}
+
+	public static ArrayList<TileSet> getSet() {
+		updateTileSets();
 		return setList;
 	}
 
 	public Board getBoard() {
 		return this;
 	}
+
+	////////////////////////////////
+	// check(boolean)
+	///////////////////////////////
+
+	public boolean isEmptyCell(int y, int x) {
+		System.out.println("This is an empty cell (" + y + ", " + x + ")");
+		return (currentTiles[y][x] == -1);
+	}
+
+	//////////////////////////////////////
+	// remove
+	//////////////////////////////////////
+
+	public void removeTileAt(int y, int x) {
+		currentTiles[y][x] = -1;
+		repaint();
+	}
+
+	////////////////////////////////////
+	// add
+	///////////////////////////////////
+
+	public void addTileAt(int y, int x) {
+		currentTiles[y][x] = Rummikub.getWhichTile();
+		repaint();
+	}
+
+	public static void addTileSet(TileSet set) {
+		// set의 size() 양옆으로 빈칸이 존재해야함 "+2" 그리고 여유공간 "+2"
+		int index = getBlankTilesIndex(set.getSize() + 2 + 2);
+		if (index == -1) {
+			System.out.println("Canot add TileSet! - ");
+			set.print();
+		} else
+			index += 3; // "+1" 한칸 띄어야 하니깐
+
+		for (int i = 0; i < set.getSize(); i++)
+			currentTiles[((index + i) / WIDTH)][(index + i) % WIDTH] = set.getTileSet().get(i);
+	}
+
+	///////////////////////////
+	// save board
+	///////////////////////////
 
 	public void saveCurrentTiles() {
 		for (int i = 0; i < HEIGHT; i++) {
@@ -145,15 +203,10 @@ public class Board extends JPanel {
 		repaint();
 	}
 
-	public boolean isEmptyCell(int y, int x) {
-		System.out.println("This is an empty cell (" + y + ", " + x + ")");
-		return (currentTiles[y][x] == -1);
-	}
-
 	////////////////////////////////////////
 	// Board Check
 	////////////////////////////////////////
-	private void updateTileSets() {
+	private static void updateTileSets() {
 		boolean inGroup = false;
 		ArrayList<Integer> tempset = new ArrayList<Integer>();
 		setList = new ArrayList<TileSet>();
@@ -183,23 +236,23 @@ public class Board extends JPanel {
 	}
 
 	// check if Board has validSets
-	public boolean check() {
+	public boolean check(Player player) {
 		updateTileSets();
 		for (int i = 0; i < setList.size(); i++) {
-			if (!GameManagerPanel.hasFirstReg()) {
+			if (!player.hasFirstReg()) {
 				// check if first registration set sum is 30+
-				if (setList.get(i).getSum() >= 30)
-					GameManagerPanel.setFirstReg(true);
+				if ((this.getCurrentTilesSum() - this.getPreviousTilesSum()) >= 30)
+					player.setFirstReg(true);
 			}
 			if (!setList.get(i).isValidSet()) {
-				GameManagerPanel.setFirstReg(false);
+				player.setFirstReg(false);
 				return false;
 			}
 
 		}
 		// 여기까지 왔으면 모든게 valid set이고, firstReg 충족
-		// first register가 되었거나, 
-		return GameManagerPanel.hasFirstReg()||setList.isEmpty();
+		// first register가 되었거나,
+		return player.hasFirstReg() || setList.isEmpty() || this.getCurrentTilesSum() == this.getPreviousTilesSum();
 
 	}
 

@@ -6,9 +6,11 @@ package rummikub;
 public class Player {
 	protected Rack rack;
 
+	protected boolean firstReg;
+	
 	public Player(Rack playerRack) {
 		this.rack = playerRack;
-
+		firstReg=false;
 	}
 
 	public Rack getRack() {
@@ -22,5 +24,14 @@ public class Player {
 	public void drawFourTiles() {
 		rack.drawFourTiles();
 	}
+
+	public boolean hasFirstReg() {
+		return firstReg;
+	}
+
+	public void setFirstReg(boolean flag) {
+		firstReg = flag;
+	}
+
 
 }

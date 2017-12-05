@@ -43,7 +43,10 @@ public class Deck {
 	}
 
 	public static Tile getTile(int tileID) {
-		return deck[tileID];
+		if (tileID == -1)
+			return blank;
+		else
+			return deck[tileID];
 	}
 
 	public static Tile getBlankTile() {

@@ -23,7 +23,6 @@ public class GameManagerPanel extends JPanel {
 	private JPanel buttonPanel;
 
 	private int turn;
-	private static boolean firstReg;
 
 	public GameManagerPanel(Board board, Player player, AI ai) {
 		this.board = board;
@@ -32,7 +31,6 @@ public class GameManagerPanel extends JPanel {
 
 		// initialize # of turn
 		turn = 0;
-		firstReg = false;
 
 		// TODO
 		setLayout(new BorderLayout());
@@ -69,21 +67,13 @@ public class GameManagerPanel extends JPanel {
 
 	}
 
-	public static boolean hasFirstReg() {
-		return firstReg;
-	}
-
-	public static void setFirstReg(boolean flag) {
-		firstReg = flag;
-	}
-
 	private class ActionEventHandler implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == btnEndTurn) {
 				// check if board is valid
-				if (board.check()) {
+				if (board.check(player)) {
 					// if player's rack is empty, player wins
 					if (player.getRack().isEmpty())
 						Rummikub.gameWin("rack is empty!");
@@ -95,16 +85,24 @@ public class GameManagerPanel extends JPanel {
 					player.getRack().saveCurrentRack();
 					// player turn end
 
+					// intialize board before ai's turn
+					board.saveCurrentTiles();
+					board.repaint();
+
 					// ai's turn
 					ai.takeTurn();
 
-					// initialize board
-					board.saveCurrentTiles();
-
+					board.repaint();
 					// check # of turns
 					System.out.println("turn: " + turn);
 					if (turn++ > 15)
-						Rummikub.gameOver("Game Over"); // TODO game end
+						if (player.getRack().getCurrentSize() > ai.getRack().getCurrentSize())
+							Rummikub.gameWin("You had less tiles than ai");
+						else if (player.getRack().getCurrentSize() < ai.getRack().getCurrentSize())
+							Rummikub.gameOver("Game Over"); // TODO game end
+						else 
+							Rummikub.gameTie("Same number of Tiles");
+
 				} else {
 					// error 메시지 출력 - 플레이어가 board 수정하고 다시 버튼클릭해야함
 					JOptionPane.showMessageDialog(null, "Your turn has not ended yet. ", "Rummikub",
