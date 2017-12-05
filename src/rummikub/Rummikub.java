@@ -100,10 +100,10 @@ public class Rummikub extends JFrame {
 		sortPanel.setLayout(new GridLayout(2, 1));
 		sortPanel.setPreferredSize(new Dimension(110, 120));
 
-		btnSort1 = new JButton("Sort by Number");
+		btnSort1 = new JButton();
 		ImageIcon imgSort1 = new ImageIcon("./pic\\number.png");
 		btnSort1.setIcon(imgSort1);
-		btnSort2 = new JButton("Sort by Color");
+		btnSort2 = new JButton();
 		ImageIcon imgSort2 = new ImageIcon("./pic\\color.png");
 		btnSort2.setIcon(imgSort2);
 
@@ -144,18 +144,21 @@ public class Rummikub extends JFrame {
 	}
 
 	public static void gameOver(String message) {
-		System.out.println("Game Over - " + message);
-		System.exit(-1);
+		JOptionPane.showMessageDialog(null, "You Lose T^T \n"+message, "Rummikub",
+				JOptionPane.ERROR_MESSAGE);
+		System.exit(0);
 	}
 
 	public static void gameWin(String message) {
-		System.out.println("You Won ! - " + message);
-		System.exit(-1);
+		JOptionPane.showMessageDialog(null, "You Win! \n"+message, "Rummikub",
+				JOptionPane.ERROR_MESSAGE);
+		System.exit(0);
 	}
 
 	public static void gameTie(String message) {
-		System.out.println("You Won ! - " + message);
-		System.exit(-1);
+		JOptionPane.showMessageDialog(null, "Tie. \n"+message, "Rummikub",
+				JOptionPane.ERROR_MESSAGE);
+		System.exit(0);
 	}
 
 
@@ -191,9 +194,11 @@ public class Rummikub extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == btnSort1) {
+				GameManagerPanel.setInfoMessage("Sorted by number");
 				player.getRack().sortByNumber();
 			}
 			if (e.getSource() == btnSort2) {
+				GameManagerPanel.setInfoMessage("Sorted by color");
 				player.getRack().sortByColor();
 			}
 		}

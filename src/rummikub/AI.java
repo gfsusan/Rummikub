@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class AI extends Player {
 	private Rack rack;
-	private Boolean enrollment = false;// 등록여부 나타냄
 	private Board board;
 
 	private ArrayList<TileSet> setList;
