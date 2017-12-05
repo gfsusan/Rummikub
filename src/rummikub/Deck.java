@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 public class Deck {
 
+	public static final int INITIAL_DEAL = 14;
+	public static final int DRAW_NUM = 4;
+	
 	// Tile생성하고,
 	private static Tile[] deck;
 	private static Tile blank;

@@ -12,8 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class Rack extends JPanel {
-	protected static final int INITIAL_DEAL = 14;
-	protected static final int DRAW_NUM = 4;
+
 
 	protected RackListener rl;
 	protected Image imgRack;
@@ -38,7 +37,7 @@ public class Rack extends JPanel {
 				currentTiles[i][j] = -1;
 
 		// Deal
-		for (int i = 0; i < INITIAL_DEAL; i++) {
+		for (int i = 0; i < Deck.INITIAL_DEAL; i++) {
 			int index = firstBlankIndex();
 			currentTiles[index / WIDTH][index % WIDTH] = Deck.takeTileFromDeck();
 		}
@@ -170,7 +169,7 @@ public class Rack extends JPanel {
 	}
 
 	public void drawFourTiles() {
-		for (int i = 0; i < DRAW_NUM; i++) {
+		for (int i = 0; i < Deck.DRAW_NUM; i++) {
 			int index = firstBlankIndex();
 			if (index != -1)
 				currentTiles[index / WIDTH][index % WIDTH] = Deck.takeTileFromDeck();
