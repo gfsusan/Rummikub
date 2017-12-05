@@ -244,7 +244,7 @@ public class Rack extends JPanel {
 		}
 		g.drawImage(imgRack, 0, 0, this);
 		imgRack = null;
-		System.out.println("Rack - paint method called!");
+		// System.out.println("Rack - paint method called!");
 	}
 
 	public void print() {

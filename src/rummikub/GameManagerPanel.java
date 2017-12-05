@@ -32,7 +32,7 @@ public class GameManagerPanel extends JPanel {
 
 		// initialize # of turn
 		turn = 0;
-		firstReg=false;
+		firstReg = false;
 
 		// TODO
 		setLayout(new BorderLayout());
@@ -45,7 +45,7 @@ public class GameManagerPanel extends JPanel {
 		// ActionEventHandler 생성 및 추가
 		ActionEventHandler handler = new ActionEventHandler();
 		btnEndTurn.addActionListener(handler);
-		
+
 		// 이미지 설정
 		ImageIcon imgEndTurn = new ImageIcon("./pic\\endTurn.png");
 		btnEndTurn.setIcon(imgEndTurn);
@@ -72,11 +72,11 @@ public class GameManagerPanel extends JPanel {
 	public static boolean hasFirstReg() {
 		return firstReg;
 	}
-	
+
 	public static void setFirstReg(boolean flag) {
-		firstReg=flag;
+		firstReg = flag;
 	}
-	
+
 	private class ActionEventHandler implements ActionListener {
 
 		@Override
@@ -97,12 +97,12 @@ public class GameManagerPanel extends JPanel {
 
 					// ai's turn
 					ai.takeTurn();
-					
+
 					// initialize board
 					board.saveCurrentTiles();
-					
+
 					// check # of turns
-					System.out.println(turn);
+					System.out.println("turn: " + turn);
 					if (turn++ > 15)
 						Rummikub.gameOver("Game Over"); // TODO game end
 				} else {
@@ -110,7 +110,7 @@ public class GameManagerPanel extends JPanel {
 					JOptionPane.showMessageDialog(null, "Your turn has not ended yet. ", "Rummikub",
 							JOptionPane.ERROR_MESSAGE);
 				}
-			// reset board
+				// reset board
 			} else if (e.getSource() == btnResetBoard) {
 				player.getRack().reset();
 				board.reset();

@@ -36,7 +36,7 @@ public class Tile {
 		}
 
 		String imagePath = "./" + "pic" + pathSep + this.getColor() + ".png";
-		System.out.println(imagePath);
+		// System.out.println(imagePath);
 		img = ImageIO.read(new File(imagePath));
 	}
 
@@ -51,7 +51,7 @@ public class Tile {
 		}
 
 		String imagePath = "./" + "pic" + pathSep + this.getColor() + tileNum + ".png";
-		System.out.println(imagePath);
+		// System.out.println(imagePath);
 		img = ImageIO.read(new File(imagePath));
 	}
 

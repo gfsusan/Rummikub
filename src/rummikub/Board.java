@@ -79,28 +79,30 @@ public class Board extends JPanel {
 
 	public int getBlankTilesIndex(int size) {
 		boolean inGroup;
+		int a=0,b=0;
 		int count = 0;
-		int a = 0, b = 0;
 		for (int i = 0; i < HEIGHT; i++) {
 			inGroup = false;
 			for (int j = 0; j < WIDTH; j++) {
-				if (currentTiles[i][j] == -1) {
+				if (currentTiles[i][j] != -1) {
 					if (inGroup) {
-						a = i;
-						b = j;
 						inGroup = false;
-						if (count > size + 1)
+						if (count >= size)
 							return a * WIDTH + b;// numGroups++;
 					}
 				} else {
 					if (inGroup) {
 						// add to group
 						count++;
+						if (count >= size)
+							return a * WIDTH + b;
 					} else {
 						inGroup = true;
-						count = 0;
+						a=i;b=j;
 						// initialize new group
 						count++;
+						if (count >= size)
+							return a * WIDTH + b;
 					}
 				}
 			}
@@ -240,7 +242,7 @@ public class Board extends JPanel {
 
 		g.drawImage(imgBoard, 0, 0, this);
 		imgBoard = null;
-		System.out.println("Board - paint method called!");
+		// System.out.println("Board - paint method called!");
 
 	}
 }

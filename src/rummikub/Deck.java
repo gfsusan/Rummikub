@@ -58,8 +58,6 @@ public class Deck {
 			random = (int) (Math.random() * remains.size());
 			rID = remains.get(random);
 			remains.remove(random);
-
-			System.out.println("tile taken from Deck : " + rID);
 			return rID;
 		} else {
 			Rummikub.gameOver("No card in Deck!");
